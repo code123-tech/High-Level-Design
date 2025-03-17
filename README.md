@@ -2,10 +2,10 @@
 Basic concepts, learning and questions related to High Level Design
 
 #### [Basic Concepts to be covered](./BasicConcepts/)
- - Network protocols, TCP, Websocket, HTTP
- - Client-server v/s Peer 2 Peer architecture
- - CAP theorem
- - Microservices Imp Design patterns
+ - [Network protocols, TCP, Websocket, HTTP](./BasicConcepts/networkProtocols.md)
+ - [Client-server v/s Peer 2 Peer architecture](./BasicConcepts/ClientServer_P2P.md)
+ - [CAP theorem](./BasicConcepts/CAP_Theorum.md)
+ - [Microservices Imp Design patterns](./BasicConcepts/Microservices_DesignPatterns.md)
     - Decomposition Pattern
     - SAGA Pattern
     - Strangler Pattern
@@ -35,8 +35,8 @@ Basic concepts, learning and questions related to High Level Design
   | Design consistent Hashing |  &#9744; |
   | Design URL shortening | &#9744; |
   | Design Key-Value store | &#9744; |
-  | Design WhatsApp | &#9744; |
-  | Design RateLimiter | &#9744; |
+  | [Design WhatsApp](./Questions/DesignWhatsApp/) | &#9744; |
+  | [Design RateLimiter](./Questions/DesignRateLimiter/) | &#9744; |
   | Design Search autocomplete system/TypeAhead system | &#9744; |
   | Design notification system | &#9744; |
   | Design Pastebin | &#9744; |
