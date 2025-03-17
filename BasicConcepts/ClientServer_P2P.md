@@ -7,3 +7,5 @@
     - *Peer:* All machines can send and receive requests from each other.
     - *Examples:* WebRTC, File sharing, Instant Messaging etc.
 
+### *Key Takeaways:*
+- *Understanding Client-Server and Peer-2-Peer architecture are base for network communication.* 
