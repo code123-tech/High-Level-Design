@@ -90,3 +90,42 @@
     - Each transaction updates the DB and publishes an event.
     - Subsequent transaction listens to this event and continue the process.
     - In case of failures, compensation events are published to undo completed transaction and maintain consistency.
+
+- *Types of SAGA:*
+    - *Choreography:* Each service manages its own transactions and listens to events from other services.
+    - *Orchestration:* A centralized orchestrator manages the transaction flow, handles the compensation logic and ensures consistency.
+
+- *Example:*
+    - An order processing SAGA involving services for order creation, inventory management, and payment processing.
+    - If the payment service fails, compensation events are triggerred to cancel the order and update the inventory.
+
+- *Advantages:*
+    - Guarantees data consistency across services/distributed transactions.
+    - Provides mechanism for handling failures/rollbacks.
+    - Allows for flexibility in service interactions.
+
+- *Disadvantages:*
+    - Increased complexity compared to local transactions.
+    - Requires careful design and implementation to ensure consistency.
+- *Interview question:*
+    - Explain how you would handle a transaction involving transferring money between two users in a microservice architecture.
+
+### CQRS (Command Query Responsibility Segregation)
+- *Purpose:* Seperating read (query) operations from write (command) operations for better perforamce and scalability.
+
+- *How it works:*
+    - The system maintains seperate models for read and write operations.
+    - write operations are performed through commands, updating write models.
+    - read operations are performed through queries, fetching data from read models which can be optimized for fast retrievel.
+
+- *Advantages:*
+    - *Performance Improvement:* Optimized read models for faster query operations.
+    - *Scalability:* Seperate read and write models allow for independent scaling.
+    - *Flexibility:* Allows for different models to be used for read and write operations.
+
+- *Example:*
+    - A blog application where write operations are performed on a relational DB, while read operations access a denormalized view optimized for fast search.
+
+- *Challenges:*
+    - Maintaining consistency between read and write models.
+    - Ensuring read model is upto date with change in write model.
