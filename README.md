@@ -9,7 +9,8 @@ Basic concepts, learning and questions related to High Level Design
     - Decomposition Pattern
     - SAGA Pattern
     - Strangler Pattern
-    - CQRS 
+    - CQRS
+ - [Guide for scaling from 0 to million users](./BasicConcepts/Scaling0ToMillUsers.md)
  - Back of the envelope estimation
  - SQL v/s NoSQL when to use which
  - More HLD components:
@@ -31,7 +32,6 @@ Basic concepts, learning and questions related to High Level Design
 #### [Questions](./Questions/)
   | Question | Status |
   | --- | --- |
-  | Scale from 0 to million users |  &#9744; |
   | Design consistent Hashing |  &#9744; |
   | Design URL shortening | &#9744; |
   | Design Key-Value store | &#9744; |
