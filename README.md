@@ -11,6 +11,7 @@ Basic concepts, learning and questions related to High Level Design
     - Strangler Pattern
     - CQRS
  - [Guide for scaling from 0 to million users](./BasicConcepts/Scaling0ToMillUsers.md)
+ - [Consistent Hashing](./BasicConcepts/Consistent_Hashing.md)
  - Back of the envelope estimation
  - SQL v/s NoSQL when to use which
  - More HLD components:
@@ -32,7 +33,7 @@ Basic concepts, learning and questions related to High Level Design
 #### [Questions](./Questions/)
   | Question | Status |
   | --- | --- |
-  | Design consistent Hashing |  &#9744; |
+  | [Design consistent Hashing](./Questions/Consistent%20Hashing%20Implementation/) |  &#9744; |
   | Design URL shortening | &#9744; |
   | Design Key-Value store | &#9744; |
   | [Design WhatsApp](./Questions/DesignWhatsApp/) | &#9744; |
