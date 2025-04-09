@@ -34,7 +34,7 @@ Basic concepts, learning and questions related to High Level Design
   | Question | Status |
   | --- | --- |
   | [Design consistent Hashing](./Questions/Consistent%20Hashing%20Implementation/) |  &#9744; |
-  | Design URL shortening | &#9744; |
+  | [Design URL shortening](./Questions/URL_Shortening/) | :construction: |
   | Design Key-Value store | &#9744; |
   | [Design WhatsApp](./Questions/DesignWhatsApp/) | &#9744; |
   | [Design RateLimiter](./Questions/DesignRateLimiter/) | &#9744; |
