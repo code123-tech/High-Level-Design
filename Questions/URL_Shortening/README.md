@@ -109,6 +109,8 @@
 
 - So, after ID generator, ID is generated, we can use `Base62 encoding` to generate the shorter URL. If number of characters are not enough in Base62 encoding, we can use padding to make it 7 characters long.
 
+### Basic Flow Diagram
+- ![Basic Flow Diagram](./BasicAPIFlow.png)
 
 ### References
 1. [Theory](https://youtu.be/C7_--hAhiaM?list=PL6W8uoQQ2c63W58rpNFDwdrBnq5G3EfT7)
