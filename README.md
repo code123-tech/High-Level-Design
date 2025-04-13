@@ -12,7 +12,7 @@ Basic concepts, learning and questions related to High Level Design
     - CQRS
  - [Guide for scaling from 0 to million users](./BasicConcepts/Scaling0ToMillUsers.md)
  - [Consistent Hashing](./BasicConcepts/Consistent_Hashing.md)
- - Back of the envelope estimation
+ - [Back of the envelope estimation](./BasicConcepts/Back_Of_The_Envelop_Esitmation.md)
  - SQL v/s NoSQL when to use which
  - More HLD components:
     - Message Queue, Kafka
