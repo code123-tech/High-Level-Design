@@ -116,3 +116,9 @@ Suppose, 1 server has 50 Threads, so it will be able to serve 100 requests per s
 
 `total servers = 18K/100 = 180 servers`
 ```
+
+5. `TradeOffs (CAP theorum)`
+- For Facebook:
+    - Partition tolerance is essential as data is distibuted
+    - Availability is also essential as users need to access data anytime.
+    - Consistency is not that important as user can see stale data -> Eventual consistency.
