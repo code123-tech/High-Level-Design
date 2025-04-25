@@ -69,4 +69,8 @@ The problem is of `Eventual Consistency`.
 As for example a write request is sent to master node, and master node gets confirmation from majority of the followers. 
 Now, suppose read request comes and it is redirected to one of the follower node where data is not replicated yet, this may cause incosistency problem but for a system with high availability, this is acceptable for a small fraction of time.
 
+### Reference
+- https://youtu.be/VKNIhztQnbY?list=PL6W8uoQQ2c63W58rpNFDwdrBnq5G3EfT7
+- https://nikasakana.medium.com/how-to-design-a-distributed-key-value-store-cfd83248541b
+- https://youtu.be/LnqKfLcszEg
 
