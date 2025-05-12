@@ -13,7 +13,7 @@ Basic concepts, learning and questions related to High Level Design
  - [Guide for scaling from 0 to million users](./BasicConcepts/Scaling0ToMillUsers.md)
  - [Consistent Hashing](./BasicConcepts/Consistent_Hashing.md)
  - [Back of the envelope estimation](./BasicConcepts/Back_Of_The_Envelop_Esitmation.md)
- - SQL v/s NoSQL when to use which
+ - [SQL v/s NoSQL when to use which](./BasicConcepts/SQL_VS_NOSQL.md)
  - More HLD components:
     - Message Queue, Kafka
     - Proxy servers
