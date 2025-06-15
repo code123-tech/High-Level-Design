@@ -21,10 +21,10 @@ def print_header():
 def check_files():
     """Check if implementation files exist"""
     required_files = [
-        'tcp_implementation.py',
-        'udp_implementation.py', 
-        'http_implementation.py',
-        'protocol_comparison_demo.py'
+        'implementations/tcp_implementation.py',
+        'implementations/udp_implementation.py', 
+        'implementations/http_implementation.py',
+        'demos/protocol_comparison_demo.py'
     ]
     
     missing_files = []
@@ -36,7 +36,7 @@ def check_files():
         print("❌ Missing files:")
         for file in missing_files:
             print(f"   - {file}")
-        print("\nPlease make sure all implementation files are in the same directory!")
+        print("\nPlease make sure all implementation files are in their proper directories!")
         return False
     
     print("✅ All implementation files found!")
@@ -79,7 +79,7 @@ def run_comparison_demo():
     print("🔄 Running Protocol Comparison Demo...")
     print("-" * 40)
     try:
-        subprocess.run([sys.executable, 'protocol_comparison_demo.py'], check=True)
+        subprocess.run([sys.executable, 'demos/protocol_comparison_demo.py'], check=True)
     except subprocess.CalledProcessError:
         print("❌ Error running comparison demo")
     except KeyboardInterrupt:
@@ -93,32 +93,32 @@ def show_implementation_guide():
     implementations = [
         {
             "title": "1. TCP Implementation (Reliable Messaging)",
-            "file": "tcp_implementation.py",
+            "file": "implementations/tcp_implementation.py",
             "steps": [
-                "Open 2 terminals in this directory",
-                "Terminal 1: python tcp_implementation.py → Choose 1 (Server)",
-                "Terminal 2: python tcp_implementation.py → Choose 2 (Client)",
+                "Open 2 terminals in the NetworkProtocols directory",
+                "Terminal 1: python implementations/tcp_implementation.py → Choose 1 (Server)",
+                "Terminal 2: python implementations/tcp_implementation.py → Choose 2 (Client)",
                 "Type messages - notice they all arrive in order!"
             ]
         },
         {
             "title": "2. UDP Implementation (Fast Streaming)",
-            "file": "udp_implementation.py", 
+            "file": "implementations/udp_implementation.py", 
             "steps": [
-                "Open 2 terminals in this directory",
-                "Terminal 1: python udp_implementation.py → Choose 1 (Server)",
-                "Terminal 2: python udp_implementation.py → Choose 2 (Client)",
+                "Open 2 terminals in the NetworkProtocols directory",
+                "Terminal 1: python implementations/udp_implementation.py → Choose 1 (Server)",
+                "Terminal 2: python implementations/udp_implementation.py → Choose 2 (Client)",
                 "Type messages - some might get lost (this is normal!)"
             ]
         },
         {
             "title": "3. HTTP Implementation (Web Server)",
-            "file": "http_implementation.py",
+            "file": "implementations/http_implementation.py",
             "steps": [
-                "Terminal 1: python http_implementation.py → Choose 1 (Server)",
+                "Terminal 1: python implementations/http_implementation.py → Choose 1 (Server)",
                 "Open browser: http://localhost:8080",
                 "Try the REST API endpoints",
-                "OR Terminal 2: python http_implementation.py → Choose 2 (Client Demo)"
+                "OR Terminal 2: python implementations/http_implementation.py → Choose 2 (Client Demo)"
             ]
         }
     ]
@@ -197,7 +197,7 @@ def main_menu():
                 import time
                 
                 def start_http_server():
-                    subprocess.run([sys.executable, 'http_implementation.py'])
+                    subprocess.run([sys.executable, 'implementations/http_implementation.py'])
                 
                 server_thread = threading.Thread(target=start_http_server)
                 server_thread.daemon = True
