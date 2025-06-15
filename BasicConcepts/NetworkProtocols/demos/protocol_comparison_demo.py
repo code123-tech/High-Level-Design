@@ -4,6 +4,8 @@ import time
 import json
 import subprocess
 import sys
+import os
+from pathlib import Path
 
 class ProtocolComparison:
     """Demonstrate the differences between TCP, UDP, and HTTP protocols"""
@@ -277,74 +279,217 @@ class ProtocolComparison:
         print("This demo shows practical differences between TCP, UDP, and HTTP")
         print()
         
+        # Show use cases first for context
         self.demonstrate_use_cases()
         self.show_comparison_table()
         
-        print("✅ Demo completed! You've learned about protocol differences.")
+        print("🎯 Now let's see these protocols in action!")
+        print("=" * 50)
+        
+        # Ask user what they want to see
+        print("\nChoose which practical demonstration to run:")
+        print("1. 🛡️  TCP Reliability Test (10 messages with acknowledgments)")
+        print("2. ⚡ UDP Speed Test (1000 messages, fast delivery)")
+        print("3. 🌐 HTTP Structure Demo (3 request-response cycles)")
+        print("4. 🚀 Run All Demonstrations (TCP → UDP → HTTP)")
+        print("5. 📋 Skip practical demos (theory only)")
+        
+        demo_choice = input("\nEnter your choice (1-5): ").strip()
+        
+        if demo_choice == "1":
+            print("\n" + "="*60)
+            self.demonstrate_tcp_reliability()
+            
+        elif demo_choice == "2":
+            print("\n" + "="*60)
+            self.demonstrate_udp_speed()
+            
+        elif demo_choice == "3":
+            print("\n" + "="*60)
+            self.demonstrate_http_structure()
+            
+        elif demo_choice == "4":
+            print("\n🚀 Running All Protocol Demonstrations...")
+            print("This will take about 30 seconds to complete all tests.")
+            
+            input("Press Enter to start TCP Reliability Test...")
+            print("\n" + "="*60)
+            self.demonstrate_tcp_reliability()
+            
+            input("Press Enter to start UDP Speed Test...")
+            print("\n" + "="*60)
+            self.demonstrate_udp_speed()
+            
+            input("Press Enter to start HTTP Structure Demo...")
+            print("\n" + "="*60)
+            self.demonstrate_http_structure()
+            
+            # Show final results comparison
+            print("\n📊 Final Results Summary:")
+            print("=" * 50)
+            if 'tcp_reliability' in self.results:
+                print(f"🛡️  TCP: {self.results['tcp_reliability']} messages delivered reliably")
+            if 'udp_speed' in self.results:
+                print(f"⚡ UDP: {self.results['udp_speed']:.0f} messages/second speed")
+            print("🌐 HTTP: 3 structured request-response cycles completed")
+            
+        elif demo_choice == "5":
+            print("\n📋 Skipping practical demonstrations.")
+            
+        else:
+            print("\n❌ Invalid choice! Skipping practical demonstrations.")
+        
+        print("\n✅ Demo completed! You've learned about protocol differences.")
         print("\n💡 Key Takeaways:")
         print("• TCP: Use when data integrity is crucial (banking, file transfers)")
         print("• UDP: Use when speed matters more than reliability (streaming, gaming)")
         print("• HTTP: Use for web services and structured client-server communication")
+        
+        if demo_choice in ["1", "2", "3", "4"]:
+            print("\n🎯 What you just saw:")
+            if demo_choice in ["1", "4"]:
+                print("• TCP: Every message was acknowledged and delivered in order")
+            if demo_choice in ["2", "4"]:
+                print("• UDP: Messages sent rapidly without waiting for acknowledgments")
+            if demo_choice in ["3", "4"]:
+                print("• HTTP: Structured requests with proper headers and JSON responses")
+
+def run_implementation(impl_type):
+    """Helper function to run implementations"""
+    impl_path = Path("../implementations")
+    
+    if impl_type == "tcp":
+        file_path = impl_path / "tcp_implementation.py"
+    elif impl_type == "udp":
+        file_path = impl_path / "udp_implementation.py"
+    elif impl_type == "http":
+        file_path = impl_path / "http_implementation.py"
+    else:
+        print("❌ Invalid implementation type")
+        return
+    
+    if file_path.exists():
+        print(f"🚀 Launching {file_path.name}...")
+        try:
+            subprocess.run([sys.executable, str(file_path)])
+        except KeyboardInterrupt:
+            print(f"\n⏹️ {file_path.name} stopped by user")
+        except Exception as e:
+            print(f"❌ Error running {file_path.name}: {e}")
+    else:
+        print(f"❌ File not found: {file_path}")
+        print("💡 Make sure you're running from the demos directory")
 
 def main():
     print("🌐 Network Protocol Implementation Guide")
     print("=" * 50)
     print("Choose what you want to run:")
     print("1. 🔄 Protocol Comparison Demo")
-    print("2. 🛡️  TCP Implementation (tcp_implementation.py)")
-    print("3. ⚡ UDP Implementation (udp_implementation.py)")
-    print("4. 🌐 HTTP Implementation (http_implementation.py)")
+    print("2. 🛡️  TCP Implementation")
+    print("3. ⚡ UDP Implementation") 
+    print("4. 🌐 HTTP Implementation")
     print("5. 📚 Show Implementation Files")
+    print("6. 🚀 Launch Quick Start Guide")
     
-    choice = input("\nEnter your choice (1-5): ")
+    choice = input("\nEnter your choice (1-6): ")
     
     if choice == "1":
         demo = ProtocolComparison()
         demo.run_demo()
     
     elif choice == "2":
-        print("📂 Starting TCP Implementation...")
-        print("Run this in two terminals:")
-        print("Terminal 1: python tcp_implementation.py")
-        print("Choose option 1 (Server)")
-        print("Terminal 2: python tcp_implementation.py")
-        print("Choose option 2 (Client)")
+        print("📂 TCP Implementation Options:")
+        print("a) 🚀 Launch TCP implementation directly")
+        print("b) 📋 Show manual instructions")
+        
+        sub_choice = input("Choose (a/b): ").lower()
+        
+        if sub_choice == "a":
+            run_implementation("tcp")
+        else:
+            print("\n📂 Manual TCP Implementation Instructions:")
+            print("Run this in two terminals from the NetworkProtocols directory:")
+            print("Terminal 1: python implementations/tcp_implementation.py")
+            print("Choose option 1 (Server)")
+            print("Terminal 2: python implementations/tcp_implementation.py")
+            print("Choose option 2 (Client)")
+            print("\n💡 Or navigate to implementations folder:")
+            print("cd ../implementations && python tcp_implementation.py")
         
     elif choice == "3":
-        print("📂 Starting UDP Implementation...")
-        print("Run this in two terminals:")
-        print("Terminal 1: python udp_implementation.py")
-        print("Choose option 1 (Server)")
-        print("Terminal 2: python udp_implementation.py")
-        print("Choose option 2 (Client)")
+        print("📂 UDP Implementation Options:")
+        print("a) 🚀 Launch UDP implementation directly")
+        print("b) 📋 Show manual instructions")
+        
+        sub_choice = input("Choose (a/b): ").lower()
+        
+        if sub_choice == "a":
+            run_implementation("udp")
+        else:
+            print("\n📂 Manual UDP Implementation Instructions:")
+            print("Run this in two terminals from the NetworkProtocols directory:")
+            print("Terminal 1: python implementations/udp_implementation.py")
+            print("Choose option 1 (Server)")
+            print("Terminal 2: python implementations/udp_implementation.py")
+            print("Choose option 2 (Client)")
+            print("\n💡 Or navigate to implementations folder:")
+            print("cd ../implementations && python udp_implementation.py")
         
     elif choice == "4":
-        print("📂 Starting HTTP Implementation...")
-        print("Run this in two terminals:")
-        print("Terminal 1: python http_implementation.py")
-        print("Choose option 1 (Server)")
-        print("Terminal 2: Open browser to http://localhost:8080")
-        print("OR Terminal 2: python http_implementation.py (Choose option 2)")
+        print("📂 HTTP Implementation Options:")
+        print("a) 🚀 Launch HTTP implementation directly")
+        print("b) 📋 Show manual instructions")
+        
+        sub_choice = input("Choose (a/b): ").lower()
+        
+        if sub_choice == "a":
+            run_implementation("http")
+        else:
+            print("\n📂 Manual HTTP Implementation Instructions:")
+            print("Run this from the NetworkProtocols directory:")
+            print("Terminal 1: python implementations/http_implementation.py")
+            print("Choose option 1 (Server)")
+            print("Terminal 2: Open browser to http://localhost:8080")
+            print("OR Terminal 2: python implementations/http_implementation.py (Choose option 2)")
+            print("\n💡 Or navigate to implementations folder:")
+            print("cd ../implementations && python http_implementation.py")
         
     elif choice == "5":
         files = [
-            "tcp_implementation.py - TCP client/server with reliable messaging",
-            "udp_implementation.py - UDP client/server with streaming demo",
-            "http_implementation.py - HTTP server with REST API",
+            "../implementations/tcp_implementation.py - TCP client/server with reliable messaging",
+            "../implementations/udp_implementation.py - UDP client/server with streaming demo",
+            "../implementations/http_implementation.py - HTTP server with REST API",
             "protocol_comparison_demo.py - This comparison demo"
         ]
-        print("\n📁 Implementation Files Created:")
+        print("\n📁 Implementation Files Available:")
         for file in files:
             print(f"  • {file}")
         
         print("\n🎯 Next Steps:")
         print("1. Run the comparison demo to see differences")
         print("2. Try each implementation individually")
-        print("3. Modify the code to understand the concepts better")
-        print("4. Build your own applications using these protocols")
+        print("3. Navigate to NetworkProtocols directory for easier access:")
+        print("   cd .. (to go back to NetworkProtocols folder)")
+        print("4. Use quick_start.py for guided experience:")
+        print("   python quick_start.py")
+        print("5. Modify the code to understand the concepts better")
+    
+    elif choice == "6":
+        quick_start_path = Path("../quick_start.py")
+        if quick_start_path.exists():
+            print("🚀 Launching Quick Start Guide...")
+            try:
+                subprocess.run([sys.executable, str(quick_start_path)])
+            except KeyboardInterrupt:
+                print("\n⏹️ Quick Start Guide stopped by user")
+            except Exception as e:
+                print(f"❌ Error running Quick Start Guide: {e}")
+        else:
+            print("❌ Quick Start Guide not found")
+            print("💡 Navigate to NetworkProtocols directory and run: python quick_start.py")
     
     else:
-        print("❌ Invalid choice!")
+        print("❌ Invalid choice! Please enter 1-6.")
 
 if __name__ == "__main__":
     main() 
