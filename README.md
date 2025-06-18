@@ -12,7 +12,8 @@ Basic concepts, learning materials, and practical implementations for High Level
 
 ### 📚 Basic Concepts
 - [🌐 Network Protocols - Complete Learning Hub](#-network-protocols---complete-learning-hub)
-- [🏛️ Architecture & Design Patterns](#️-architecture--design-patterns)
+- [🏛️ Client-Server vs P2P - Complete Architecture Hub](#️-client-server-vs-peer-to-peer---complete-architecture-hub)
+- [🏗️ Additional Architecture & Design Patterns](#️-additional-architecture--design-patterns)
 - [📈 Scaling & Performance](#-scaling--performance)
 - [🗄️ Data & Storage](#️-data--storage)
 - [🔧 Additional HLD Components](#-additional-hld-components-coming-soon)
@@ -25,6 +26,7 @@ Basic concepts, learning materials, and practical implementations for High Level
 
 ### 🛠️ Practical Commands
 - [Network Protocols Commands](#for-network-protocols-learning)
+- [Architecture Patterns Commands](#for-architecture-patterns-learning)
 - [System Design Practice](#for-system-design-practice)
 
 ---
@@ -37,7 +39,6 @@ Basic concepts, learning materials, and practical implementations for High Level
 **Comprehensive practical learning for TCP, UDP, HTTP, and WebSockets**
 
 📁 **Organized Structure:**
-- 📖 **Theory**: Core concepts and definitions
 - 🛠️ **Implementations**: Individual protocol examples (TCP, UDP, HTTP)
 - 🎮 **Demos**: Protocol comparison tools
 - 🚀 **Examples**: Real-world projects (Chat app, Game server, Web API)
@@ -49,8 +50,22 @@ cd BasicConcepts/NetworkProtocols
 python3 quick_start.py
 ```
 
-#### 🏛️ Architecture & Design Patterns
-- [Client-server v/s Peer 2 Peer architecture](./BasicConcepts/ClientServer_P2P.md)
+#### 🏛️ [Client-Server vs Peer-to-Peer - Complete Architecture Hub](./BasicConcepts/ClientServer_P2P/)
+**Comprehensive practical learning for fundamental network architectures**
+
+📁 **Organized Structure:**
+- 🛠️ **Implementations**: Working Client-Server and P2P demos
+- 🎮 **Demos**: Interactive architecture comparison tools
+- 🚀 **Examples**: Real-world systems (Banking, Web, BitTorrent, Blockchain)
+- ⚡ **Quick Start**: Interactive architecture learning guide
+
+**🚀 Get Started:**
+```bash
+cd BasicConcepts/ClientServer_P2P
+python quick_start.py
+```
+
+#### 🏗️ Additional Architecture & Design Patterns
 - [CAP theorem](./BasicConcepts/CAP_Theorum.md)
 - [Microservices Important Design Patterns](./BasicConcepts/Microservices_DesignPatterns.md)
   - Decomposition Pattern
@@ -131,6 +146,20 @@ python3 implementations/http_implementation.py
 python3 examples/practical_projects.py
 ```
 
+### For Architecture Patterns Learning:
+```bash
+# Interactive architecture comparison
+cd BasicConcepts/ClientServer_P2P
+python quick_start.py
+
+# Try individual architectures
+python implementations/client_server_demo.py
+python implementations/peer_to_peer_demo.py
+
+# Real-world examples
+python examples/practical_examples.py
+```
+
 ### For System Design Practice:
 1. Start with **Basic Concepts** to build foundation
 2. Practice with **Network Protocols** implementations
@@ -147,7 +176,7 @@ python3 examples/practical_projects.py
 
 1. **Foundation** (Week 1-2)
    - Network Protocols (with hands-on coding)
-   - Client-Server vs P2P
+   - Client-Server vs P2P Architecture (with practical examples)
    - CAP Theorem
 
 2. **Scaling & Performance** (Week 3-4)
