@@ -106,7 +106,7 @@ def run_client_server():
     impl_path = Path("implementations/client_server_demo.py")
     if impl_path.exists():
         try:
-            subprocess.run([sys.executable, str(impl_path)], cwd="implementations")
+            subprocess.run([sys.executable, "client_server_demo.py"], cwd="implementations")
         except KeyboardInterrupt:
             print("\n👋 Client-Server demo stopped.")
     else:
@@ -122,7 +122,7 @@ def run_peer_to_peer():
     impl_path = Path("implementations/peer_to_peer_demo.py")
     if impl_path.exists():
         try:
-            subprocess.run([sys.executable, str(impl_path)], cwd="implementations")
+            subprocess.run([sys.executable, "peer_to_peer_demo.py"], cwd="implementations")
         except KeyboardInterrupt:
             print("\n👋 Peer-to-Peer demo stopped.")
     else:
@@ -138,7 +138,7 @@ def run_comparison():
     demo_path = Path("demos/architecture_comparison.py")
     if demo_path.exists():
         try:
-            subprocess.run([sys.executable, str(demo_path)], cwd="demos")
+            subprocess.run([sys.executable, "architecture_comparison.py"], cwd="demos")
         except KeyboardInterrupt:
             print("\n👋 Comparison tool stopped.")
     else:
