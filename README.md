@@ -13,6 +13,7 @@ Basic concepts, learning materials, and practical implementations for High Level
 ### 📚 Basic Concepts
 - [🌐 Network Protocols - Complete Learning Hub](#-network-protocols---complete-learning-hub)
 - [🏛️ Client-Server vs P2P - Complete Architecture Hub](#️-client-server-vs-peer-to-peer---complete-architecture-hub)
+- [⚖️ CAP Theorem - Complete Learning Hub](#-cap-theorem---complete-learning-hub)
 - [🏗️ Additional Architecture & Design Patterns](#️-additional-architecture--design-patterns)
 - [📈 Scaling & Performance](#-scaling--performance)
 - [🗄️ Data & Storage](#️-data--storage)
@@ -27,6 +28,7 @@ Basic concepts, learning materials, and practical implementations for High Level
 ### 🛠️ Practical Commands
 - [Network Protocols Commands](#for-network-protocols-learning)
 - [Architecture Patterns Commands](#for-architecture-patterns-learning)
+- [CAP Theorem Commands](#for-cap-theorem-learning)
 - [System Design Practice](#for-system-design-practice)
 
 ---
@@ -65,8 +67,23 @@ cd BasicConcepts/ClientServer_P2P
 python quick_start.py
 ```
 
+#### ⚖️ [CAP Theorem - Complete Learning Hub](./BasicConcepts/CAP_Theorem/)
+**Hands-on simulations demonstrating CP vs AP trade-offs**
+
+📁 **Organized Structure:**
+- 🛠️ **Implementations**: `cp_demo.py`, `ap_demo.py` (and optional `ca_demo.py`)
+- 📊 **Comparison Tool**: Side-by-side output viewer
+- 🚀 **Examples**: Real-world CP vs AP showcase
+- ⚡ **Quick Start**: Interactive learning guide
+
+**🚀 Get Started:**
+```bash
+cd BasicConcepts/CAP_Theorem
+python quick_start.py
+```
+
+
 #### 🏗️ Additional Architecture & Design Patterns
-- [CAP theorem](./BasicConcepts/CAP_Theorum.md)
 - [Microservices Important Design Patterns](./BasicConcepts/Microservices_DesignPatterns.md)
   - Decomposition Pattern
   - SAGA Pattern
@@ -164,6 +181,20 @@ python examples/practical_examples.py
 1. Start with **Basic Concepts** to build foundation
 2. Practice with **Network Protocols** implementations
 3. Solve **Questions** to test understanding
+
+### For CAP Theorem Learning:
+```bash
+# Interactive CAP experience
+cd BasicConcepts/CAP_Theorem
+python quick_start.py
+
+# Compare CP vs AP side-by-side
+python demos/cap_comparison.py
+
+# Run demos individually
+python implementations/cp_demo.py
+python implementations/ap_demo.py
+```
 
 ## 📖 References & Resources
 
