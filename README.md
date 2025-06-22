@@ -14,7 +14,7 @@ Basic concepts, learning materials, and practical implementations for High Level
 - [🌐 Network Protocols - Complete Learning Hub](#-network-protocols---complete-learning-hub)
 - [🏛️ Client-Server vs P2P - Complete Architecture Hub](#️-client-server-vs-peer-to-peer---complete-architecture-hub)
 - [⚖️ CAP Theorem - Complete Learning Hub](#-cap-theorem---complete-learning-hub)
-- [🏗️ Additional Architecture & Design Patterns](#️-additional-architecture--design-patterns)
+- [🏗️ Microservices Design Patterns - Complete Learning Hub](#-microservices-design-patterns---complete-learning-hub)
 - [📈 Scaling & Performance](#-scaling--performance)
 - [🗄️ Data & Storage](#️-data--storage)
 - [🔧 Additional HLD Components](#-additional-hld-components-coming-soon)
@@ -81,14 +81,21 @@ python quick_start.py
 cd BasicConcepts/CAP_Theorem
 python quick_start.py
 ```
+#### 🏗️ [Microservices Design Patterns - Complete Learning Hub](./BasicConcepts/Microservices_DesignPatterns/)
+**Interactive demos for Strangler, SAGA, CQRS and other key patterns**
 
+📁 **Organized Structure:**
+- 🛠️ **Implementations**: `strangler_demo.py`, `saga_demo.py`, `cqrs_demo.py`
+- 🎮 **Demos**: Pattern comparison tool (placeholder)
+- 🚀 **Examples**: Real-world snippets (TBD)
+- ⚡ **Quick Start**: Interactive learning guide
 
-#### 🏗️ Additional Architecture & Design Patterns
-- [Microservices Important Design Patterns](./BasicConcepts/Microservices_DesignPatterns.md)
-  - Decomposition Pattern
-  - SAGA Pattern
-  - Strangler Pattern
-  - CQRS
+**🚀 Get Started:**
+```bash
+cd BasicConcepts/Microservices_DesignPatterns
+python quick_start.py
+```
+
 
 #### 📈 Scaling & Performance
 - [Guide for scaling from 0 to million users](./BasicConcepts/Scaling0ToMillUsers.md)
@@ -194,6 +201,12 @@ python demos/cap_comparison.py
 # Run demos individually
 python implementations/cp_demo.py
 python implementations/ap_demo.py
+```
+
+### For Microservices Design Patterns Learning:
+```bash
+cd BasicConcepts/Microservices_DesignPatterns
+python quick_start.py
 ```
 
 ## 📖 References & Resources
