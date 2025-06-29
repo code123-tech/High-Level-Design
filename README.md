@@ -15,7 +15,7 @@ Basic concepts, learning materials, and practical implementations for High Level
 - [🏛️ Client-Server vs P2P - Complete Architecture Hub](#️-client-server-vs-peer-to-peer---complete-architecture-hub)
 - [⚖️ CAP Theorem - Complete Learning Hub](#-cap-theorem---complete-learning-hub)
 - [🏗️ Microservices Design Patterns - Complete Learning Hub](#-microservices-design-patterns---complete-learning-hub)
-- [📈 Scaling & Performance](#-scaling--performance)
+- [Scalling to million users Guide](#-scaling-0-to-million-users-guide)
 - [🗄️ Data & Storage](#️-data--storage)
 - [🔧 Additional HLD Components](#-additional-hld-components-coming-soon)
 - [🗃️ Database Concepts](#️-database-concepts-coming-soon)
@@ -36,21 +36,6 @@ Basic concepts, learning materials, and practical implementations for High Level
 ## 📚 Learning Structure
 
 ### [Basic Concepts](./BasicConcepts/)
-
-#### 🌐 [Network Protocols - Complete Learning Hub](./BasicConcepts/NetworkProtocols/)
-**Comprehensive practical learning for TCP, UDP, HTTP, and WebSockets**
-
-📁 **Organized Structure:**
-- 🛠️ **Implementations**: Individual protocol examples (TCP, UDP, HTTP)
-- 🎮 **Demos**: Protocol comparison tools
-- 🚀 **Examples**: Real-world projects (Chat app, Game server, Web API)
-- ⚡ **Quick Start**: Interactive learning guide
-
-**🚀 Get Started:**
-```bash
-cd BasicConcepts/NetworkProtocols
-python3 quick_start.py
-```
 
 #### 🏛️ [Client-Server vs Peer-to-Peer - Complete Architecture Hub](./BasicConcepts/ClientServer_P2P/)
 **Comprehensive practical learning for fundamental network architectures**
@@ -96,9 +81,36 @@ cd BasicConcepts/Microservices_DesignPatterns
 python quick_start.py
 ```
 
+#### 🌐 [Network Protocols - Complete Learning Hub](./BasicConcepts/NetworkProtocols/)
+**Comprehensive practical learning for TCP, UDP, HTTP, and WebSockets**
 
-#### 📈 Scaling & Performance
-- [Guide for scaling from 0 to million users](./BasicConcepts/Scaling0ToMillUsers.md)
+📁 **Organized Structure:**
+- 🛠️ **Implementations**: Individual protocol examples (TCP, UDP, HTTP)
+- 🎮 **Demos**: Protocol comparison tools
+- 🚀 **Examples**: Real-world projects (Chat app, Game server, Web API)
+- ⚡ **Quick Start**: Interactive learning guide
+
+**🚀 Get Started:**
+```bash
+cd BasicConcepts/NetworkProtocols
+python3 quick_start.py
+```
+
+#### 🌐 [Scaling 0 to million users Guide](./BasicConcepts/Scaling0ToMillUsers/)
+**Comprehensive practical learning for Load balancers, DB replication etc.
+
+📁 **Organized Structure:**
+- 🛠️ **Implementations**: Individual step demo can be used to handle million users
+- 🎮 **Demos**: Protocol comparison tools
+- ⚡ **Quick Start**: Interactive learning guide
+
+**🚀 Get Started:**
+```bash
+cd BasicConcepts/Scaling0ToMillUsers
+python3 quick_start.py
+```
+
+- [Guide for scaling concepts](./BasicConcepts/Scaling0ToMillUsers.md)
 - [Consistent Hashing](./BasicConcepts/Consistent_Hashing.md)
 - [Back of the envelope estimation](./BasicConcepts/Back_Of_The_Envelop_Esitmation.md)
 
