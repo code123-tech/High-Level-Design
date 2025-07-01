@@ -16,6 +16,7 @@ Basic concepts, learning materials, and practical implementations for High Level
 - [⚖️ CAP Theorem - Complete Learning Hub](#-cap-theorem---complete-learning-hub)
 - [🏗️ Microservices Design Patterns - Complete Learning Hub](#-microservices-design-patterns---complete-learning-hub)
 - [Scalling to million users Guide](#-scaling-0-to-million-users-guide)
+- [Back of the Envelop Estimation](#-back-of-the-envelop-estimation)
 - [🗄️ Data & Storage](#️-data--storage)
 - [🔧 Additional HLD Components](#-additional-hld-components-coming-soon)
 - [🗃️ Database Concepts](#️-database-concepts-coming-soon)
@@ -113,6 +114,22 @@ python3 quick_start.py
 - [Guide for scaling concepts](./BasicConcepts/Scaling0ToMillUsers.md)
 - [Consistent Hashing](./BasicConcepts/Consistent_Hashing.md)
 - [Back of the envelope estimation](./BasicConcepts/Back_Of_The_Envelop_Esitmation.md)
+
+
+#### 🌐 [Back of the Envelop Estimation](./BasicConcepts/BackOfEnvelopeEstimation/)
+**Back-of-the-envelope (BoE) maths is about turning coarse assumptions into
+order-of-magnitude numbers *fast* (≈10 min).
+
+📁 **Organized Structure:**
+- 🛠️ **Implementations**: Individual step demo can be used to handle million users
+- 🎮 **Demos**: Architectural visual tools
+- ⚡ **Quick Start**: Interactive learning guide
+
+**🚀 Get Started:**
+```bash
+cd BasicConcepts/BackOfEnvelopeEstimation
+python3 quick_start.py
+```
 
 #### 🗄️ Data & Storage
 - [SQL v/s NoSQL - When to use which](./BasicConcepts/SQL_VS_NOSQL.md)
@@ -218,6 +235,12 @@ python implementations/ap_demo.py
 ### For Microservices Design Patterns Learning:
 ```bash
 cd BasicConcepts/Microservices_DesignPatterns
+python quick_start.py
+```
+
+### For Back of Envelope Estimation Learning:
+```bash
+cd BasicConcepts/BackOfEnvelopeEstimation
 python quick_start.py
 ```
 
