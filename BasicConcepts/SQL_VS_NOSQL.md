@@ -1,3 +1,25 @@
+# SQL vs NoSQL – Enhanced Overview
+
+
+## Table of Contents
+1. [CAP Theorem](#cap-theorem)
+2. [SQL_VS_NOSQL_Theory](#sql_vs_nosql_theory)
+    a. [Summary](#summary)
+    b. [Highlights](#highlights)
+    c. [Key Insights](#key-insights)
+    d. [SQL vs NoSQL Comparison Table](#sql-vs-nosql-comparison-table)
+3. [NoSQL Subtypes](#nosql-subtypes)   
+4. [Hybrid Approaches](#hybrid-approaches)
+5. [References](#references)
+
+---
+
+## CAP Theorem
+Before understanding the SQL and NoSQL differences, here is a quick recap of the CAP theorem. The CAP theorem states that in a distributed data system, you can only guarantee two out of the following three: Consistency, Availability, and Partition Tolerance. SQL databases traditionally focus on Consistency and Availability, while NoSQL databases often prioritize Availability and Partition Tolerance, sometimes sacrificing immediate consistency for scalability and fault tolerance. For more details, please refer to the [CAP Theorem](./CAP_Theorem)
+
+---
+
+## SQL vs NoSQL Theory
 ### Summary
 The key differences between SQL (Structured Query Language) and NoSQL databases, and provides guidance on when to use each type. The presentation is structured around four main 
 criteria: structure, nature, scalability, and properties of both SQL and NoSQL. SQL is defined as a query language used with relational databases that organize data in tables with 
@@ -45,5 +67,40 @@ unstructured data seamlessly caters to modern applications, such as social media
 data accuracy and integrity after replication across distributed systems. Users might retrieve outdated or inconsistent data at times, emphasizing the need for applications to handle 
 these realities in design and user experience.
 
-In summary, understanding both SQL and NoSQL databases is critical for anyone engaged in software development, data management, and system architecture. The choice between these 
-technologies hinges on specific project needs regarding data structure, integrity, availability, and query complexity.
+### SQL vs NoSQL Comparison Table
+
+| Feature                | SQL Databases                        | NoSQL Databases                                  |
+|------------------------|--------------------------------------|--------------------------------------------------|
+| Data Model             | Relational (tables, rows, columns)   | Key-Value, Document, Column-Family, Graph        |
+| Schema                 | Fixed, predefined                    | Dynamic, flexible                                |
+| Query Language         | SQL (Structured Query Language)      | Varies (APIs, JSON, proprietary, etc.)           |
+| Transactions           | ACID (Atomicity, Consistency, etc.)  | BASE (Basically Available, Soft state, Eventual) |
+| Scalability            | Vertical (scale-up)                  | Horizontal (scale-out)                           |
+| Consistency            | Strong (immediate)                   | Eventual (tunable in some DBs)                   |
+| Relationships          | Complex joins, foreign keys          | Limited or application-level                     |
+| Use Cases              | Banking, ERP, CRM, OLTP              | Big Data, IoT, Real-time analytics, social apps  |
+| Examples               | MySQL, PostgreSQL, Oracle, SQL Server| MongoDB, Cassandra, Redis, DynamoDB, Neo4j       |
+
+---
+
+## NoSQL Subtypes
+- **Key-Value Stores**: Simple, fast, scalable (e.g., Redis, DynamoDB). Best for caching, session storage.
+- **Document Stores**: Store semi-structured data as JSON/BSON (e.g., MongoDB, CouchDB). Good for content management, catalogs.
+- **Column-Family Stores**: Store data in columns, optimized for large-scale analytics (e.g., Cassandra, HBase).
+- **Graph Databases**: Store data as nodes and edges (e.g., Neo4j, ArangoDB). Ideal for social networks, recommendation engines.
+
+---
+
+## Hybrid Approaches
+Many modern systems use both SQL and NoSQL databases (polyglot persistence) to leverage the strengths of each. For example, a financial application might use SQL for transaction records and NoSQL for logging or analytics. Distributed SQL databases (e.g., Google Spanner, CockroachDB) combine SQL features with horizontal scalability.
+
+---
+
+## References
+- [CAP Theorem (Wikipedia)](https://en.wikipedia.org/wiki/CAP_theorem)
+- [NoSQL Databases Explained (MongoDB)](https://www.mongodb.com/nosql-explained)
+- [ACID vs BASE](https://www.geeksforgeeks.org/difference-between-acid-and-base-in-dbms/)
+- [Polyglot Persistence](https://martinfowler.com/bliki/PolyglotPersistence.html)
+- [Distributed SQL Databases](https://www.cockroachlabs.com/blog/what-is-distributed-sql/)
+
+---
