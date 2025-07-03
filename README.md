@@ -17,6 +17,7 @@ Basic concepts, learning materials, and practical implementations for High Level
 - [🏗️ Microservices Design Patterns - Complete Learning Hub](#-microservices-design-patterns---complete-learning-hub)
 - [Scalling to million users Guide](#-scaling-0-to-million-users-guide)
 - [Back of the Envelop Estimation](#-back-of-the-envelop-estimation)
+- [SQL v/s NoSQL - When to use which](#-sql-vs-nosql---when-to-use-which)
 - [🗄️ Data & Storage](#️-data--storage)
 - [🔧 Additional HLD Components](#-additional-hld-components-coming-soon)
 - [🗃️ Database Concepts](#️-database-concepts-coming-soon)
@@ -33,8 +34,6 @@ Basic concepts, learning materials, and practical implementations for High Level
 - [System Design Practice](#for-system-design-practice)
 
 ---
-
-## 📚 Learning Structure
 
 ### [Basic Concepts](./BasicConcepts/)
 
@@ -131,8 +130,18 @@ cd BasicConcepts/BackOfEnvelopeEstimation
 python3 quick_start.py
 ```
 
-#### 🗄️ Data & Storage
-- [SQL v/s NoSQL - When to use which](./BasicConcepts/SQL_VS_NOSQL.md)
+#### 🌐 [SQL v/s NoSQL - When to use which](./BasicConcepts/SQL_VS_NOSQL/)
+This is a detailed guide on when to use SQL and when to use NoSQL with some demos.
+
+📁 **Organized Structure:**
+- 🛠️ **Implementations**: Various demos showing the difference between SQL and NoSQL
+- ⚡ **Quick Start**: Interactive learning guide
+
+**🚀 Get Started:**
+```bash
+cd BasicConcepts/SQL_VS_NOSQL
+python3 quick_start.py
+```
 
 #### 🔧 Additional HLD Components (Coming Soon)
 - Message Queue, Kafka
