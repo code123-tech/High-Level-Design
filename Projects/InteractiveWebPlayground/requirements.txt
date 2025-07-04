@@ -1,0 +1,3 @@
+# Requirements for Interactive Web Playground
+streamlit>=1.20
+# Python 3.7+ recommended 

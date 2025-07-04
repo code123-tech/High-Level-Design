@@ -4,6 +4,13 @@ SQL vs NoSQL – Quick Start Launcher
 ----------------------------------
 Run this script to explore hands-on demos comparing SQL and NoSQL concepts.
 
+Demos include:
+- CRUD operations
+- Schema evolution
+- Transaction consistency
+- Scalability performance
+- NEW: Join vs Aggregation (SQL JOIN, MongoDB aggregation, Redis app-side join)
+
 Usage:
     python quick_start.py
 
