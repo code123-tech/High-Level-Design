@@ -182,7 +182,7 @@ python3 quick_start.py
 ### Hard Questions
 | Question | Status |
 | --- | --- |
-| [Design Chat System (WhatsApp)](./Questions/DesignChatSystem(WhatsApp)/) | &#9744; |
+| [Design Chat System (WhatsApp)](./Questions/DesignChatSystem(WhatsApp)/) | :white_check_mark: |
 | Design Twitter | &#9744; |
 | Design Dropbox | &#9744; |
 | Design Instagram | &#9744; |
