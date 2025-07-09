@@ -171,7 +171,7 @@ python3 quick_start.py
 ### Medium Questions
 | Question | Status |
 | --- | --- |
-| [Design Consistent Hashing](./Questions/Consistent%20Hashing%20Implementation/) | &#9744; |
+| [Design Consistent Hashing](./Questions/Consistent%20Hashing%20Implementation/) | :white_check_mark: |
 | [Design Key-Value Store](./Questions/Key-Value_Store/) | :construction: |
 | [Design Rate Limiter](./Questions/DesignRateLimiter/) | &#9744; |
 | Design Search Autocomplete/TypeAhead System | &#9744; |

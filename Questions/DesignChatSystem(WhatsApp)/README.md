@@ -208,9 +208,178 @@ sequenceDiagram
 • Worker centralizes fan-out logic and off-loads push notifications.  
 • ACK propagation keeps both clients' UIs in sync without polling.
 
-### 5.2  Group Chat
-* ≤ 100 members – fan-out per member queue.
-* Massive group – publish once to group topic, clients pull on demand.
+### 5.2  Group Chat Flows
+
+The system handles group chats differently based on the group size to optimize for performance and resource utilization:
+
+#### 5.2.1 Small Group Chat Flow (≤100 members)
+```mermaid
+sequenceDiagram
+    participant A as Sender
+    participant WS1 as WS Server 1
+    participant K as Kafka
+    participant W as Worker
+    participant C as Cassandra
+    participant R as Redis Cache
+    participant WS2 as WS Server Pool
+    participant B as Recipients (≤100)
+
+    Note over A,B: Small Group Chat Flow (≤100 members)
+    
+    A->>WS1: MSG_SEND(group_id, msg)
+    WS1->>K: produce(group_id, msg)
+    W-->>K: consume
+    W->>C: store_message
+    W->>R: get_online_members(group_id)
+    R-->>W: online_members[]
+    
+    par Fan-out to online members
+        W->>WS2: push_to_online(msg)
+        WS2->>B: MSG_RECV
+        B->>WS2: ACK
+        WS2->>W: delivery_status
+    and Push notification to offline
+        W->>Push: notify_offline_members
+        Push->>FCM: send_notifications
+    end
+    
+    W->>WS1: broadcast_delivery_status
+    WS1->>A: MSG_DELIVERED
+```
+
+![WhatsApp-Style Chat System - Small Group Chat Flow](./GroupMsgLessThen100People.png)
+
+**Flow Explanation:**
+1. **Message Send**
+   - Sender sends message to their WebSocket server
+   - Message includes `group_id` and encrypted content
+
+2. **Message Processing**
+   - WebSocket server produces message to Kafka topic (partitioned by `group_id`)
+   - Worker consumes message and handles fan-out logic
+
+3. **Storage & Member Resolution**
+   - Worker stores message in Cassandra (for persistence)
+   - Queries Redis cache for online group members
+   - Maintains delivery status tracking
+
+4. **Parallel Distribution**
+   - For online members:
+     - Pushes message to respective WebSocket servers
+     - Collects delivery acknowledgments
+   - For offline members:
+     - Triggers push notifications via FCM/APNs
+     - Messages stored for later retrieval
+
+#### 5.2.2 Large Group Chat Flow (>100 members)
+```mermaid
+sequenceDiagram
+    participant A as Sender
+    participant WS1 as WS Server 1
+    participant K as Kafka
+    participant W as Worker
+    participant C as Cassandra
+    participant R as Redis Cache
+    participant WS2 as WS Server Pool
+    participant B as Recipients (>100)
+
+    Note over A,B: Large Group Chat Flow (>100 members)
+    
+    A->>WS1: MSG_SEND(group_id, msg)
+    WS1->>K: produce(group_id, msg)
+    W-->>K: consume
+    W->>C: store_message
+    
+    Note over W,C: No immediate fan-out
+    
+    W->>R: update_msg_pointer(group_id)
+    W->>WS1: MSG_STORED
+    WS1->>A: MSG_DELIVERED
+    
+    Note over B,R: Lazy Loading by Recipients
+    
+    B->>WS2: SYNC_GROUP(last_msg_id)
+    WS2->>R: get_new_msgs(group_id, last_msg_id)
+    R-->>WS2: new_msg_pointers
+    WS2->>C: fetch_messages(pointers)
+    C-->>WS2: messages
+    WS2->>B: MSG_BATCH
+```
+
+![WhatsApp-Style Chat System - Large Group Chat Flow](./GroupMsgAbove100People.png)
+
+**Flow Explanation:**
+1. **Message Send**
+   - Similar initial flow: Sender → WebSocket → Kafka → Worker
+   - Message stored in Cassandra
+
+2. **Pointer Update**
+   - Instead of fan-out, updates message pointer in Redis
+   - Maintains last message ID for the group
+   - Quick acknowledgment to sender
+
+3. **Client Sync**
+   - Clients periodically poll for updates
+   - Send their last seen message ID
+   - Receive only new messages
+
+4. **Batch Retrieval**
+   - Server returns message pointers
+   - Clients fetch actual messages in batches
+   - Optimizes network usage and server load
+
+#### 5.2.3 Group Chat Data Model
+```sql
+-- Cassandra table for group messages
+CREATE TABLE group_messages (
+    group_id TEXT,
+    msg_ts TIMEUUID,
+    msg_id UUID,
+    sender_id BIGINT,
+    content_type SMALLINT,
+    encrypted_content BLOB,
+    media_url TEXT,
+    PRIMARY KEY ((group_id), msg_ts)
+) WITH CLUSTERING ORDER BY (msg_ts DESC);
+
+-- Redis structures
+HASH group:${group_id}:meta {
+    last_msg_id: UUID,
+    member_count: INT,
+    last_activity: TIMESTAMP
+}
+
+SET group:${group_id}:online_members {
+    member_id1,
+    member_id2,
+    ...
+}
+```
+
+#### 5.2.4 Key Design Considerations
+1. **Performance Optimizations**
+   - Message batching for large groups
+   - Caching of frequently accessed groups
+   - Lazy loading of media content
+   - Smart client-side sync intervals
+
+2. **Scaling Considerations**
+   - Horizontal scaling of WebSocket servers
+   - Partitioning by `group_id` in Kafka
+   - Redis cluster for online member tracking
+   - CDN for media distribution
+
+3. **Reliability Features**
+   - Message deduplication
+   - Retry mechanism for failed deliveries
+   - Consistent message ordering
+   - Backup delivery via push notifications
+
+4. **Edge Cases Handled**
+   - Member joins/leaves during message delivery
+   - Network disconnections
+   - Message delivery to newly added members
+   - Rate limiting for spam prevention
 
 ---
 ## 6. Scaling & Reliability Patterns
