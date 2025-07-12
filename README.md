@@ -173,7 +173,7 @@ python3 quick_start.py
 | --- | --- |
 | [Design Consistent Hashing](./Questions/Consistent%20Hashing%20Implementation/) | :white_check_mark: |
 | [Design Key-Value Store](./Questions/Key-Value_Store/) | :construction: |
-| [Design Rate Limiter](./Questions/DesignRateLimiter/) | &#9744; |
+| [Design Rate Limiter](./Questions/DesignRateLimiter/) | :construction: |
 | Design Search Autocomplete/TypeAhead System | &#9744; |
 | Design Notification System | &#9744; |
 | Design Web Crawler | &#9744; |
