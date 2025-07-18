@@ -64,6 +64,7 @@ The simplest form of database architecture with a single database server handlin
 3. Maintenance requires downtime
 4. No failover capability
 5. Resource limitations of a single machine
+6. Once data server is crashed, the application will be down and data will be lost
 
 ### Use Cases
 - Development environments
