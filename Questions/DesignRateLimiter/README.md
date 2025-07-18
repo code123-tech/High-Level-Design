@@ -299,3 +299,4 @@ Key implementation considerations:
 3. [Stripe Rate Limiting](https://stripe.com/blog/rate-limiters)
 4. [Cloudflare Rate Limiting](https://www.cloudflare.com/rate-limiting/)
 5. [Kong Rate Limiting Plugin](https://docs.konghq.com/hub/kong-inc/rate-limiting/)
+6. [Sliding Window Counter](https://youtu.be/AILToGInF7U)
