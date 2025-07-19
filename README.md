@@ -21,6 +21,7 @@ Basic concepts, learning materials, and practical implementations for High Level
 - [🗄️ Data & Storage](#️-data--storage)
 - [🔧 Additional HLD Components](#-additional-hld-components-coming-soon)
 - [🗃️ Database Concepts](#️-database-concepts-coming-soon)
+- [🏗️ Architecture Guide](#-architecture-guide)
 
 ### 🎯 Practice Questions by Difficulty
 - [Easy Questions](#easy-questions)
@@ -66,6 +67,7 @@ python quick_start.py
 cd BasicConcepts/CAP_Theorem
 python quick_start.py
 ```
+
 #### 🏗️ [Microservices Design Patterns - Complete Learning Hub](./BasicConcepts/Microservices_DesignPatterns/)
 **Interactive demos for Strangler, SAGA, CQRS and other key patterns**
 
@@ -141,6 +143,23 @@ This is a detailed guide on when to use SQL and when to use NoSQL with some demo
 ```bash
 cd BasicConcepts/SQL_VS_NOSQL
 python3 quick_start.py
+```
+
+#### 🌐 [Architecture Guide](./BasicConcepts/Architecture_Guide/)
+This is a detailed guide on how to design an architecture for a given problem.
+
+📁 **Organized Structure:**
+- 🛠️ **Implementations**: Various demos showing the difference between SQL and NoSQL
+
+**🚀 Get Started with theory:**
+```bash
+cd BasicConcepts/ArchitectureGuide
+```
+
+**🚀 Get Started with practical:**
+```bash
+cd Projects/ArchitecturePatterns
+docker-compose -f docker/single-node/docker-compose.yml up -d
 ```
 
 #### 🔧 Additional HLD Components (Coming Soon)
