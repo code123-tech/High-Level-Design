@@ -1,0 +1,144 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ../../
+      dockerfile: docker/active-passive/Dockerfile
+    ports:
+      - "8889:8000"
+    environment:
+      - PRIMARY_DB_URL=postgresql://postgres:postgres@primary-db:5432/postgres
+      - STANDBY_DB_URL=postgresql://postgres:postgres@standby-db:5432/postgres
+      - PYTHONPATH=/app
+    depends_on:
+      - primary-db
+      - standby-db
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+  primary-db:
+    image: postgres:14
+    ports:
+      - "5435:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - primary-data:/var/lib/postgresql/data
+      - ./config/postgresql/primary.conf:/etc/postgresql/postgresql.conf
+      - ./config/postgresql/archive:/var/lib/postgresql/data/archive
+    command: postgres -c config_file=/etc/postgresql/postgresql.conf
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  standby-db:
+    image: postgres:14
+    ports:
+      - "5436:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - standby-data:/var/lib/postgresql/data
+      - ./config/postgresql/standby.conf:/etc/postgresql/postgresql.conf
+      - ./config/postgresql/archive:/var/lib/postgresql/data/archive:ro
+    command: postgres -c config_file=/etc/postgresql/postgresql.conf
+    depends_on:
+      - primary-db
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  prometheus:
+    image: prom/prometheus:v2.44.0
+    ports:
+      - "9093:9090"
+    volumes:
+      - ../../monitoring/prometheus:/etc/prometheus
+      - prometheus-data:/prometheus
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --web.console.libraries=/usr/share/prometheus/console_libraries
+      - --web.console.templates=/usr/share/prometheus/consoles
+      - --web.enable-lifecycle
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:9090/-/healthy"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+  grafana:
+    image: grafana/grafana:9.5.2
+    ports:
+      - "3003:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_AUTH_ANONYMOUS_ENABLED=false
+    volumes:
+      - ../../monitoring/grafana:/etc/grafana/provisioning
+      - grafana-data:/var/lib/grafana
+    depends_on:
+      - prometheus
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+  node-exporter:
+    image: prom/node-exporter:v1.5.0
+    ports:
+      - "9101:9100"
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - --path.procfs=/host/proc
+      - --path.sysfs=/host/sys
+      - --collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:9100/metrics"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  primary-data:
+  standby-data:
+  prometheus-data:
+  grafana-data:
+
+networks:
+  app-network:
+    driver: bridge 
