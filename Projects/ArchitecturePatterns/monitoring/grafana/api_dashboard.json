@@ -58,7 +58,7 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "reqps"
         },
         "overrides": []
       },
@@ -71,8 +71,8 @@
       "id": 1,
       "options": {
         "legend": {
-          "calcs": [],
-          "displayMode": "list",
+          "calcs": ["mean", "max"],
+          "displayMode": "table",
           "placement": "bottom",
           "showLegend": true
         },
@@ -157,8 +157,8 @@
       "id": 2,
       "options": {
         "legend": {
-          "calcs": [],
-          "displayMode": "list",
+          "calcs": ["mean", "p95"],
+          "displayMode": "table",
           "placement": "bottom",
           "showLegend": true
         },
@@ -173,8 +173,18 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "rate(http_response_time_seconds[5m])",
-          "refId": "A"
+          "expr": "rate(http_request_duration_seconds_sum[5m]) / rate(http_request_duration_seconds_count[5m])",
+          "refId": "A",
+          "legendFormat": "Average"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m]))",
+          "refId": "B",
+          "legendFormat": "95th percentile"
         }
       ],
       "title": "Response Time (5m)",
@@ -189,7 +199,7 @@
     "list": []
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {},

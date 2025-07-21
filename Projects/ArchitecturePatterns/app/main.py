@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException, Depends
 from sqlalchemy.orm import Session
 from sqlalchemy import text
 from . import models, database
-from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST
+from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 from fastapi.responses import Response
 import time
 
@@ -11,7 +11,7 @@ app = FastAPI(title="Architecture Patterns Demo")
 
 # Prometheus metrics
 REQUEST_COUNT = Counter('http_requests_total', 'Total HTTP requests')
-RESPONSE_TIME = Counter('http_response_time_seconds', 'Response time in seconds')
+REQUEST_LATENCY = Histogram('http_request_duration_seconds', 'HTTP request latency in seconds')
 
 # Database initialization
 models.Base.metadata.create_all(bind=database.engine)
@@ -24,11 +24,13 @@ def get_db():
         db.close()
 
 @app.get("/")
+@REQUEST_LATENCY.time()  # This decorator automatically tracks request duration
 def read_root():
     REQUEST_COUNT.inc()
     return {"message": "Welcome to Architecture Patterns Demo"}
 
 @app.get("/health")
+@REQUEST_LATENCY.time()
 def health_check(db: Session = Depends(get_db)):
     try:
         # Simple database check using the items table
@@ -50,27 +52,22 @@ def metrics():
 
 # Example CRUD endpoints
 @app.post("/items/")
+@REQUEST_LATENCY.time()
 def create_item(name: str, db: Session = Depends(get_db)):
-    start_time = time.time()
     REQUEST_COUNT.inc()
-    
     try:
         item = models.Item(name=name)
         db.add(item)
         db.commit()
         db.refresh(item)
-        
-        RESPONSE_TIME.inc(time.time() - start_time)
         return item
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/items/")
+@REQUEST_LATENCY.time()
 def read_items(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
-    start_time = time.time()
     REQUEST_COUNT.inc()
-    
     items = db.query(models.Item).offset(skip).limit(limit).all()
-    RESPONSE_TIME.inc(time.time() - start_time)
     return items 
