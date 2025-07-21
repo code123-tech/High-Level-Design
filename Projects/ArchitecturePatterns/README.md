@@ -13,19 +13,19 @@ This project demonstrates different high availability architecture patterns usin
 ```
 ArchitecturePatterns/
 ├── app/
-│   ├── main.py           # FastAPI application
+│   ├── main.py           # FastAPI 
 │   ├── models.py         # Data models
-│   └── database.py       # Database connections
+│   └── database.py       # Database 
 ├── docker/
-│   ├── single-node/      # Single node setup
-│   ├── active-passive/   # Active-passive setup
-│   └── active-active/    # Active-active setup
+│   ├── single-node/      # Single node
+│   ├── active-passive/   # Active-passive
+│   └── active-active/    # Active-active 
 ├── monitoring/
-│   ├── prometheus/       # Prometheus configuration
-│   └── grafana/          # Grafana dashboards
+│   ├── prometheus/       # Prometheus 
+│   └── grafana/          # Grafana 
 ├── tests/
 │   ├── load_tests/       # k6 load tests
-│   └── failover_tests/   # Failover scenarios
+│   └── failover_tests/   # Failover 
 └── docker-compose.yml    # Main compose file
 ```
 

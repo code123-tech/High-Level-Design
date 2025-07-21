@@ -1,0 +1,67 @@
+groups:
+  - name: api_alerts
+    rules:
+      - alert: HighRequestLatency
+        expr: rate(http_response_time_seconds[5m]) > 0.5
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High request latency on {{ $labels.instance }}"
+          description: "API request latency is above 500ms\n Value: {{ $value }}"
+
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status="500"}[5m]) > 0.1
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High error rate on {{ $labels.instance }}"
+          description: "Error rate is above 10%\n Value: {{ $value }}"
+
+      - alert: APIDown
+        expr: up{job="api"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "API is down on {{ $labels.instance }}"
+          description: "API has been down for more than 1 minute"
+
+      - alert: DatabaseConnectionIssues
+        expr: rate(database_connection_errors_total[5m]) > 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Database connection issues on {{ $labels.instance }}"
+          description: "Database connection errors detected\n Value: {{ $value }}"
+
+  - name: node_alerts
+    rules:
+      - alert: HighCPUUsage
+        expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU usage on {{ $labels.instance }}"
+          description: "CPU usage is above 80%\n Value: {{ $value }}%"
+
+      - alert: HighMemoryUsage
+        expr: (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes * 100 > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High memory usage on {{ $labels.instance }}"
+          description: "Memory usage is above 80%\n Value: {{ $value }}%"
+
+      - alert: LowDiskSpace
+        expr: (node_filesystem_avail_bytes / node_filesystem_size_bytes) * 100 < 20
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Low disk space on {{ $labels.instance }}"
+          description: "Disk space is below 20%\n Value: {{ $value }}%" 

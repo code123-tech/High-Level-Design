@@ -1,0 +1,129 @@
+version: '3.8'
+
+# This is the main compose file that allows running different architecture patterns
+# Usage: docker compose --profile <pattern_name> up -d
+# Patterns: single-node, active-passive, active-active
+
+services:
+  # Single Node Pattern
+  single-node-app:
+    profiles: ["single-node"]
+    extends:
+      file: docker/single-node/docker-compose.yml
+      service: app
+
+  single-node-db:
+    profiles: ["single-node"]
+    extends:
+      file: docker/single-node/docker-compose.yml
+      service: db
+
+  single-node-prometheus:
+    profiles: ["single-node"]
+    extends:
+      file: docker/single-node/docker-compose.yml
+      service: prometheus
+
+  single-node-grafana:
+    profiles: ["single-node"]
+    extends:
+      file: docker/single-node/docker-compose.yml
+      service: grafana
+
+  single-node-node-exporter:
+    profiles: ["single-node"]
+    extends:
+      file: docker/single-node/docker-compose.yml
+      service: node-exporter
+
+  # Active-Passive Pattern
+  active-passive-app-primary:
+    profiles: ["active-passive"]
+    extends:
+      file: docker/active-passive/docker-compose.yml
+      service: app-primary
+
+  active-passive-app-secondary:
+    profiles: ["active-passive"]
+    extends:
+      file: docker/active-passive/docker-compose.yml
+      service: app-secondary
+
+  active-passive-db-primary:
+    profiles: ["active-passive"]
+    extends:
+      file: docker/active-passive/docker-compose.yml
+      service: db-primary
+
+  active-passive-db-secondary:
+    profiles: ["active-passive"]
+    extends:
+      file: docker/active-passive/docker-compose.yml
+      service: db-secondary
+
+  active-passive-prometheus:
+    profiles: ["active-passive"]
+    extends:
+      file: docker/active-passive/docker-compose.yml
+      service: prometheus
+
+  active-passive-grafana:
+    profiles: ["active-passive"]
+    extends:
+      file: docker/active-passive/docker-compose.yml
+      service: grafana
+
+  # Active-Active Pattern
+  active-active-app-1:
+    profiles: ["active-active"]
+    extends:
+      file: docker/active-active/docker-compose.yml
+      service: app-1
+
+  active-active-app-2:
+    profiles: ["active-active"]
+    extends:
+      file: docker/active-active/docker-compose.yml
+      service: app-2
+
+  active-active-db-1:
+    profiles: ["active-active"]
+    extends:
+      file: docker/active-active/docker-compose.yml
+      service: db-1
+
+  active-active-db-2:
+    profiles: ["active-active"]
+    extends:
+      file: docker/active-active/docker-compose.yml
+      service: db-2
+
+  active-active-prometheus:
+    profiles: ["active-active"]
+    extends:
+      file: docker/active-active/docker-compose.yml
+      service: prometheus
+
+  active-active-grafana:
+    profiles: ["active-active"]
+    extends:
+      file: docker/active-active/docker-compose.yml
+      service: grafana
+
+  # Common Services
+  load-balancer:
+    profiles: ["active-passive", "active-active"]
+    image: nginx:latest
+    volumes:
+      - ./config/nginx:/etc/nginx/conf.d
+    ports:
+      - "80:80"
+    depends_on:
+      - active-passive-app-primary
+      - active-passive-app-secondary
+      - active-active-app-1
+      - active-active-app-2
+
+volumes:
+  postgres_data:
+  grafana_data: 
