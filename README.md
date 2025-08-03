@@ -22,6 +22,7 @@ Basic concepts, learning materials, and practical implementations for High Level
 - [🔧 Additional HLD Components](#-additional-hld-components-coming-soon)
 - [🗃️ Database Concepts](#️-database-concepts-coming-soon)
 - [🏗️ Architecture Guide](#-architecture-guide)
+- [🌐 Distributed Message Queue, Kafka](#-distributed-message-queue-kafka)
 
 ### 🎯 Practice Questions by Difficulty
 - [Easy Questions](#easy-questions)
@@ -162,8 +163,24 @@ cd Projects/ArchitecturePatterns
 docker-compose -f docker/single-node/docker-compose.yml up -d
 ```
 
+#### 🌐 [Distributed Message Queue, Kafka](./BasicConcepts/Distributed_Messaging_Queue/)
+This is a detailed guide on how to design a distributed message queue using Kafka.  
+
+**🚀 Get Started with theory:**
+```bash
+cd BasicConcepts/Distributed_Messaging_Queue
+```
+
+**🚀 Get Started with practical:**
+
+1. Basic Point to Point Messaging with RabbitMQ
+```bash
+cd Projects/MessageQueueExperiments/basic_point_to_point
+python3 producer.py
+python3 consumer.py
+```
+
 #### 🔧 Additional HLD Components (Coming Soon)
-- Message Queue, Kafka
 - Proxy servers
 - What is CDN
 - Storage types: (Block, File, Object storage, RAID)
