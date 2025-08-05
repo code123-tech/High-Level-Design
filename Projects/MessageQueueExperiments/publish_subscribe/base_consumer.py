@@ -65,6 +65,7 @@ class BaseConsumer(ABC):
     
     def start_consuming(self):
         """Start consuming messages."""
+        connection = None
         try:
             connection = self.create_connection()
             channel = connection.channel()

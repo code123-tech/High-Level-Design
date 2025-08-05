@@ -26,6 +26,10 @@ publish_subscribe/
 1. Install RabbitMQ Server
    - Download and install from [RabbitMQ official website](https://www.rabbitmq.com/download.html)
    - Make sure the RabbitMQ server is running
+   - docker command to install rabbitmq:
+   ```bash
+   docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:4-management
+   ```   
 
 2. Create Python Virtual Environment
    ```bash
