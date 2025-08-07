@@ -11,12 +11,11 @@ from config import *
 class FastProducer:
     def __init__(self):
         self.current_rate = PRODUCER_RATE
-        self.confirm_tokens = threading.Semaphore(MAX_QUEUE_SIZE)
         self.message_count = 0
         self.should_stop = False
         
     def create_connection(self):
-        """Create a connection to RabbitMQ with publisher confirms."""
+        """Create a connection to RabbitMQ."""
         credentials = pika.PlainCredentials(RABBITMQ_USERNAME, RABBITMQ_PASSWORD)
         parameters = pika.ConnectionParameters(
             host=RABBITMQ_HOST,
@@ -25,10 +24,6 @@ class FastProducer:
         )
         connection = pika.BlockingConnection(parameters)
         channel = connection.channel()
-        
-        # Enable publisher confirms
-        if PUBLISHER_CONFIRMS:
-            channel.confirm_delivery()
         
         # Declare queue with max length limit
         channel.queue_declare(
@@ -49,9 +44,6 @@ class FastProducer:
             messages_published = 0
             
             for _ in range(batch_size):
-                # Wait for confirm token
-                self.confirm_tokens.acquire()
-                
                 message = {
                     'id': self.message_count,
                     'content': f'Message {self.message_count}',
@@ -59,7 +51,7 @@ class FastProducer:
                 }
                 
                 try:
-                    # Publish with mandatory flag to get returns on routing failures
+                    # Publish message
                     channel.basic_publish(
                         exchange='',
                         routing_key=QUEUE_NAME,
@@ -67,33 +59,22 @@ class FastProducer:
                         properties=pika.BasicProperties(
                             delivery_mode=2,  # Make message persistent
                             timestamp=int(time.time())
-                        ),
-                        mandatory=True
+                        )
                     )
                     
-                    # For each message, wait for confirmation
-                    if PUBLISHER_CONFIRMS:
-                        if channel.wait_for_confirms(timeout=0.1):
-                            messages_published += 1
-                            monitor.increment_message_in()
-                            self.message_count += 1
-                        else:
-                            print(" [!] Message was not confirmed")
-                            self._apply_back_pressure()
-                    else:
-                        messages_published += 1
-                        monitor.increment_message_in()
-                        self.message_count += 1
+                    messages_published += 1
+                    monitor.increment_message_in()
+                    self.message_count += 1
                     
-                    # Release token since we got confirmation
-                    self.confirm_tokens.release()
-                    
-                except pika.exceptions.UnroutableError:
-                    print(" [!] Message was returned - queue might be full")
+                except pika.exceptions.ChannelClosed:
+                    print(" [!] Channel closed - queue might be full")
                     self._apply_back_pressure()
-                    self.confirm_tokens.release()
+                    break
                     
-            if messages_published > 0 and messages_published < batch_size:
+            if messages_published == 0:
+                print(" [!] Failed to publish any messages in batch")
+                self._apply_back_pressure()
+            elif messages_published < batch_size:
                 print(f" [!] Only published {messages_published}/{batch_size} messages")
                 self._apply_back_pressure()
                 
@@ -108,6 +89,9 @@ class FastProducer:
             int(self.current_rate * RATE_REDUCTION_FACTOR)
         )
         print(f" [*] Applying back pressure - new rate: {self.current_rate} msg/sec")
+        
+        # Sleep briefly to allow system to stabilize
+        time.sleep(0.5)
     
     def run(self):
         """Main producer loop."""
@@ -125,8 +109,11 @@ class FastProducer:
                 
                 # Calculate sleep time to maintain rate
                 elapsed = time.time() - batch_start
-                sleep_time = max(0, (BATCH_SIZE / self.current_rate) - elapsed)
-                time.sleep(sleep_time)
+                target_time = BATCH_SIZE / self.current_rate
+                sleep_time = max(0, target_time - elapsed)
+                
+                if sleep_time > 0:
+                    time.sleep(sleep_time)
                 
         except KeyboardInterrupt:
             print(" [*] Producer stopped by user")
