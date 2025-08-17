@@ -4,6 +4,17 @@ Build, run, and play with a reverse proxy (NGINX) in front of two tiny apps. Lea
 
 ---
 
+## Menu
+
+- [1) What are we building?](#1-what-are-we-building)
+- [2) One-time setup](#2-one-time-setup)
+- [3) Start the lab](#3-start-the-lab)
+- [4) Try it out (copy/paste tests)](#4-try-it-out-copypaste-tests)
+- [5) How it works (simple words)](#5-how-it-works-simple-words)
+- [6) Files you can read](#6-files-you-can-read)
+- [7) Stop the lab](#7-stop-the-lab)
+- [8) Future scope](#8-future-scope)
+
 ## 1) What are we building?
 
 - A friendly traffic cop called a "reverse proxy" (NGINX)
@@ -141,10 +152,30 @@ docker compose down -v
 
 ---
 
-## 8) Next steps (optional)
+## 8) Future scope
 
-- Add TLS (HTTPS) with a self-signed cert
-- Add Prometheus metrics for NGINX
-- Try header-based routing (e.g., send your user to `v2` only)
+- TLS + HTTP/2 at the edge
+  - What: Serve HTTPS on a new port (e.g., 8443) using self‑signed certs; enable HTTP/2
+  - Why: Realistic edge termination and H2 multiplexing
+
+- Prometheus metrics for NGINX
+  - What: Add `nginx-prometheus-exporter` and scrape `stub_status`; create Grafana panels
+  - Why: Observe edge latency, cache hit ratio, and 429 rates over time
+
+- Sticky/header-based canary
+  - What: Route to v2 when header `X-Canary: true` (or a cookie) while keeping 90/10 default
+  - Why: Targeted rollouts and simple session stickiness
+
+- WebSocket pass-through
+  - What: Add a FastAPI `ws://` endpoint and configure `Upgrade`/`Connection` headers in NGINX
+  - Why: Demonstrate realtime proxying
+
+- Smarter caching with ETag + revalidation
+  - What: App emits `ETag`; NGINX uses `proxy_cache_revalidate`; optional cache purge endpoint
+  - Why: Correct freshness with minimal bandwidth (304 responses)
+
+- Friendly error pages and JSON 429 body
+  - What: Custom `error_page` for 429/5xx with small JSON bodies
+  - Why: Better developer experience and observability
 
 
