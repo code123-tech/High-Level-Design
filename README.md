@@ -15,12 +15,12 @@ Basic concepts, learning materials, and practical implementations for High Level
 - [⚖️ CAP Theorem - Complete Learning Hub](#-cap-theorem---complete-learning-hub)
 - [🏗️ Microservices Design Patterns - Complete Learning Hub](#-microservices-design-patterns---complete-learning-hub)
 - [🌐 Network Protocols - Complete Learning Hub](#-network-protocols---complete-learning-hub)
-- [Scalling 0 to million users Guide](#-scaling-0-to-million-users-guide)
-- [Back of the Envelop Estimation](#-back-of-the-envelop-estimation)
-- [SQL v/s NoSQL - When to use which](#-sql-vs-nosql---when-to-use-which)
-- [🏗️ Architecture Guide](#-architecture-guide)
-- [🌐 Distributed Message Queue, Kafka](#-distributed-message-queue-kafka)
-- [🌐 Proxy_Reverse Proxy](#-proxy_reverse-proxy)
+- [📈 Scalling 0 to million users Guide](#-scaling-0-to-million-users-guide)
+- [🧮 Back of the Envelop Estimation](#-back-of-the-envelop-estimation)
+- [🛢️ SQL v/s NoSQL - When to use which](#-sql-vs-nosql---when-to-use-which)
+- [🧭 Architecture Guide](#-architecture-guide)
+- [📨 Distributed Message Queue, Kafka](#-distributed-message-queue-kafka)
+- [🔀 Proxy_Reverse Proxy](#-proxy_reverse-proxy)
 - [🔧 Additional HLD Components](#-additional-hld-components-coming-soon)
 - [🗃️ Database Concepts](#️-database-concepts-coming-soon)
 
@@ -99,7 +99,7 @@ cd BasicConcepts/NetworkProtocols
 python3 quick_start.py
 ```
 
-#### 🌐 [Scaling 0 to million users Guide](./BasicConcepts/Scaling0ToMillUsers/)
+#### 📈 [Scaling 0 to million users Guide](./BasicConcepts/Scaling0ToMillUsers/)
 **Comprehensive practical learning for Load balancers, DB replication etc.
 
 📁 **Organized Structure:**
@@ -118,7 +118,7 @@ python3 quick_start.py
 - [Back of the envelope estimation](./BasicConcepts/Back_Of_The_Envelop_Esitmation.md)
 
 
-#### 🌐 [Back of the Envelop Estimation](./BasicConcepts/BackOfEnvelopeEstimation/)
+#### 🧮 [Back of the Envelop Estimation](./BasicConcepts/BackOfEnvelopeEstimation/)
 **Back-of-the-envelope (BoE) maths is about turning coarse assumptions into
 order-of-magnitude numbers *fast* (≈10 min).
 
@@ -133,7 +133,7 @@ cd BasicConcepts/BackOfEnvelopeEstimation
 python3 quick_start.py
 ```
 
-#### 🌐 [SQL v/s NoSQL - When to use which](./BasicConcepts/SQL_VS_NOSQL/)
+#### 🛢️ [SQL v/s NoSQL - When to use which](./BasicConcepts/SQL_VS_NOSQL/)
 This is a detailed guide on when to use SQL and when to use NoSQL with some demos.
 
 📁 **Organized Structure:**
@@ -146,7 +146,7 @@ cd BasicConcepts/SQL_VS_NOSQL
 python3 quick_start.py
 ```
 
-#### 🌐 [Architecture Guide](./BasicConcepts/Architecture_Guide/)
+#### 🧭 [Architecture Guide](./BasicConcepts/Architecture_Guide/)
 This is a detailed guide on how to design an architecture for a given problem.
 
 📁 **Organized Structure:**
@@ -163,7 +163,7 @@ cd Projects/ArchitecturePatterns
 docker-compose -f docker/single-node/docker-compose.yml up -d
 ```
 
-#### 🌐 [Distributed Message Queue, Kafka](./BasicConcepts/Distributed_Messaging_Queue/)
+#### 📨 [Distributed Message Queue, Kafka](./BasicConcepts/Distributed_Messaging_Queue/)
 This is a detailed guide on how to design a distributed message queue using Kafka.  
 
 **🚀 Get Started with theory:**
@@ -180,7 +180,7 @@ python3 producer.py
 python3 consumer.py
 ```
 
-#### 🌐 [Proxy_Reverse Proxy](./BasicConcepts/Proxy_ReverseProxy/)
+#### 🔀 [Proxy_Reverse Proxy](./BasicConcepts/Proxy_ReverseProxy/)
 This is a detailed guide on how to design a proxy and reverse proxy.  
 
 **🚀 Get Started with theory:**
