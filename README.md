@@ -23,6 +23,7 @@ Basic concepts, learning materials, and practical implementations for High Level
 - [🗃️ Database Concepts](#️-database-concepts-coming-soon)
 - [🏗️ Architecture Guide](#-architecture-guide)
 - [🌐 Distributed Message Queue, Kafka](#-distributed-message-queue-kafka)
+- [🌐 Proxy_Reverse Proxy](#-proxy_reverse-proxy)
 
 ### 🎯 Practice Questions by Difficulty
 - [Easy Questions](#easy-questions)
@@ -180,9 +181,32 @@ python3 producer.py
 python3 consumer.py
 ```
 
+#### 🌐 [Proxy_Reverse Proxy](./BasicConcepts/Proxy_ReverseProxy/)
+This is a detailed guide on how to design a proxy and reverse proxy.  
+
+**🚀 Get Started with theory:**
+```bash
+cd BasicConcepts/Proxy_ReverseProxy
+```
+
+**🚀 Get Started with practical:**
+
+1. Build, run, and play with a reverse proxy (NGINX) in front of two tiny apps. Learn canary (90/10), caching, and rate limiting—step by step.
+
+Project: [ProxyReverseProxyLab](./Projects/ProxyReverseProxyLab/)
+```bash
+cd Projects/ProxyReverseProxyLab
+docker-compose up -d
+
+# Test it
+curl http://localhost:8080/
+curl http://localhost:8080/api/v1/hello
+
+# Stop it
+docker-compose down
+```
+
 #### 🔧 Additional HLD Components (Coming Soon)
-- Proxy servers
-- What is CDN
 - Storage types: (Block, File, Object storage, RAID)
 - File System (Google file system, HDFS)
 - Bloom Filter
