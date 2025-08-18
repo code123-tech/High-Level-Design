@@ -11,19 +11,18 @@ Basic concepts, learning materials, and practical implementations for High Level
 - [🎯 Learning Path Recommendation](#-learning-path-recommendation)
 
 ### 📚 Basic Concepts
-- [🌐 Network Protocols - Complete Learning Hub](#-network-protocols---complete-learning-hub)
 - [🏛️ Client-Server vs P2P - Complete Architecture Hub](#️-client-server-vs-peer-to-peer---complete-architecture-hub)
 - [⚖️ CAP Theorem - Complete Learning Hub](#-cap-theorem---complete-learning-hub)
 - [🏗️ Microservices Design Patterns - Complete Learning Hub](#-microservices-design-patterns---complete-learning-hub)
-- [Scalling to million users Guide](#-scaling-0-to-million-users-guide)
+- [🌐 Network Protocols - Complete Learning Hub](#-network-protocols---complete-learning-hub)
+- [Scalling 0 to million users Guide](#-scaling-0-to-million-users-guide)
 - [Back of the Envelop Estimation](#-back-of-the-envelop-estimation)
 - [SQL v/s NoSQL - When to use which](#-sql-vs-nosql---when-to-use-which)
-- [🗄️ Data & Storage](#️-data--storage)
-- [🔧 Additional HLD Components](#-additional-hld-components-coming-soon)
-- [🗃️ Database Concepts](#️-database-concepts-coming-soon)
 - [🏗️ Architecture Guide](#-architecture-guide)
 - [🌐 Distributed Message Queue, Kafka](#-distributed-message-queue-kafka)
 - [🌐 Proxy_Reverse Proxy](#-proxy_reverse-proxy)
+- [🔧 Additional HLD Components](#-additional-hld-components-coming-soon)
+- [🗃️ Database Concepts](#️-database-concepts-coming-soon)
 
 ### 🎯 Practice Questions by Difficulty
 - [Easy Questions](#easy-questions)
