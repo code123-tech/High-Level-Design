@@ -15,6 +15,7 @@ Basic concepts, learning materials, and practical implementations for High Level
 - [⚖️ CAP Theorem - Complete Learning Hub](#-cap-theorem---complete-learning-hub)
 - [🏗️ Microservices Design Patterns - Complete Learning Hub](#-microservices-design-patterns---complete-learning-hub)
 - [🌐 Network Protocols - Complete Learning Hub](#-network-protocols---complete-learning-hub)
+- [🚦 Load Balancers - Complete Learning Hub](#-load-balancers---complete-learning-hub)
 - [📈 Scalling 0 to million users Guide](#-scaling-0-to-million-users-guide)
 - [🧮 Back of the Envelop Estimation](#-back-of-the-envelop-estimation)
 - [🛢️ SQL v/s NoSQL - When to use which](#-sql-vs-nosql---when-to-use-which)
@@ -97,6 +98,20 @@ python quick_start.py
 ```bash
 cd BasicConcepts/NetworkProtocols
 python3 quick_start.py
+```
+
+#### 🚦 [Load Balancers - Complete Learning Hub](./BasicConcepts/Load_Balancer/)
+**End-to-end guide to L4/L7 load balancing, algorithms, health checks, TLS, and HA deployments**
+
+📁 **Organized Structure:**
+- 📖 **Guide**: Concepts with diagrams (this README)
+- 🧪 **Experiments**: (TBD) NGINX/HAProxy/Envoy snippets
+
+**🚀 Get Started:**
+```bash
+cd BasicConcepts/Load_Balancer
+# Read the guide
+code README.md
 ```
 
 #### 📈 [Scaling 0 to million users Guide](./BasicConcepts/Scaling0ToMillUsers/)

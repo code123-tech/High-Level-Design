@@ -10,10 +10,6 @@ A practical, implementation-minded guide to load balancers: what they do, where 
   - [Application Load Balancer (L7)](#application-load-balancer-l7)
   - [When to use which](#when-to-use-which)
 - [Core Balancing Algorithms](#core-balancing-algorithms)
-- [Session Persistence (Sticky Sessions)](#session-persistence-sticky-sessions)
-- [Health Checks and Outlier Detection](#health-checks-and-outlier-detection)
-- [TLS Termination, Re-encryption, and mTLS](#tls-termination-re-encryption-and-mtls)
-- [Edge Features: WAF, Rate Limiting, Caching](#edge-features-waf-rate-limiting-caching)
 - [Reference Architectures](#reference-architectures)
 - [Capacity Planning and Sizing](#capacity-planning-and-sizing)
 - [Failure Modes and Mitigations](#failure-modes-and-mitigations)
@@ -102,49 +98,15 @@ Rule of thumb: Start with L7 for web APIs; use L4 for raw TCP/UDP or when ultra-
 
 ```mermaid
 flowchart TD
-  A[New Request] --> B{Need Affinity?}
-  B -- Yes --> H[Hash(Key)->Target]
-  B -- No --> C{Have Latency/Conn Metrics?}
-  C -- Yes --> D[Least-Conn / Least-RT]
-  C -- No --> E[Round Robin]
+  A[New Request]--> B{Need Affinity?}
+  B --|Yes|--> H[Hash_Of-Key to Target]
+  B --|No|--> C{Have Latency/Conn Metrics?}
+  C --|Yes|--> D[LeastConn or LeastRT]
+  C --|No|--> E[Round Robin]
   D --> Z[Forward]
   E --> Z
   H --> Z
 ```
-
----
-
-## Session Persistence (Sticky Sessions)
-- Cookie-based: LB injects a cookie mapping to an upstream.
-- Source IP hash: Keep same client on same instance (beware NAT).
-- App-level session stores: Prefer stateless services; move session to Redis/DB for resilience.
-
-Use stickiness sparingly—prefer stateless apps for elasticity.
-
----
-
-## Health Checks and Outlier Detection
-- Active checks: Periodic TCP connect or HTTP GET/HEAD.
-- Passive checks: Eject instances after error/timeout thresholds.
-- Outlier detection: Temporarily quarantine slow/error-prone instances.
-
-Best practice: Use a lightweight `/healthz` endpoint with dependency checks gated behind feature flags.
-
----
-
-## TLS Termination, Re-encryption, and mTLS
-- Edge termination: LB handles certs; traffic to app may be plaintext (intra-VPC) or re-encrypted.
-- Re-encryption: LB terminates and re-establishes TLS to upstreams.
-- mTLS: Mutual auth between LB and upstreams for zero-trust networks.
-
-Automate certificate renewals (ACME) and enforce modern ciphers.
-
----
-
-## Edge Features: WAF, Rate Limiting, Caching
-- WAF: OWASP rules, bot protection, IP reputation
-- Rate limiting: Token/leaky bucket by user/API key/IP
-- Caching: Static assets and cacheable API responses at the edge
 
 ---
 
