@@ -10,6 +10,14 @@ A practical, implementation-minded guide to load balancers: what they do, where 
   - [Application Load Balancer (L7)](#application-load-balancer-l7)
   - [When to use which](#when-to-use-which)
 - [Core Balancing Algorithms](#core-balancing-algorithms)
+- [Algorithm Deep Dives](#algorithm-deep-dives)
+  - [Round Robin](#round-robin)
+  - [Weighted Round Robin](#weighted-round-robin)
+  - [Least Connections](#least-connections)
+  - [Weighted Least Connections](#weighted-least-connections)
+  - [Least Response Time](#least-response-time)
+  - [IP Hash](#ip-hash)
+  - [Random Two Choices](#random-two-choices)
 - [Reference Architectures](#reference-architectures)
 - [Capacity Planning and Sizing](#capacity-planning-and-sizing)
 - [Failure Modes and Mitigations](#failure-modes-and-mitigations)
@@ -107,6 +115,93 @@ flowchart TD
   E --> Z
   H --> Z
 ```
+
+
+## Algorithm Deep Dives
+
+### Round Robin
+Simple rotation across all healthy instances.
+
+```mermaid
+flowchart LR
+  LB[LB] --> I1[Inst1]
+  LB --> I2[Inst2]
+  LB --> I3[Inst3]
+```
+
+How it works: The load balancer sends the first request to Inst1, the next to Inst2, then Inst3, and repeats in a loop.
+
+- Pros: Very easy to set up; spreads requests evenly on average.
+- Cons: Doesn’t look at how busy each instance is; slow or overloaded instances can still get the same share.
+
+### Weighted Round Robin
+Assigns weights to instances to skew traffic proportionally.
+
+```mermaid
+flowchart LR
+  LB[LB] -->|w=5| I1[Inst1]
+  LB -->|w=3| I2[Inst2]
+  LB -->|w=1| I3[Inst3]
+```
+
+How it works: If the weights are 5, 3, and 1, roughly 5/3/1 of the requests go to Inst1/Inst2/Inst3 over time. The balancer repeats a weighted pattern.
+
+- Pros: Simple way to give bigger machines more work; predictable behavior.
+- Cons: Weights are static and can get out of date; needs manual updates or automation.
+
+### Least Connections
+Sends request to instance with fewest active connections.
+
+```mermaid
+flowchart LR
+  LB[LB] -- check conn counts --> DB[(state)]
+  LB --> L[Pick min active]
+  L --> I?[Target]
+```
+
+How it works: Before each request, the balancer checks current open connections per instance and chooses the one with the smallest number.
+
+- Pros: Adapts when requests take different times; good for long‑lived connections (WebSockets, streams).
+- Cons: Requires accurate connection counts; can flip‑flop between targets if counts are very close.
+
+### Weighted Least Connections
+Like least connections but scaled by capacity weight.
+
+How it works: Calculate ratio of active connections of each instance by its weight (capacity). Pick the instance with the lowest ratio.
+
+- Pros: Better handles mixed small/large instances than plain least‑conn.
+- Cons: Harder to tune; still depends on good, up‑to‑date weights and metrics.
+
+### Least Response Time
+Routes to the fastest responders (combines latency and active connections).
+
+How it works: Track recent response times per instance (often also consider active connections) and send the next request to the instance responding fastest on average.
+
+- Pros: Tends to minimize user‑visible latency.
+- Cons: Measurements can be noisy; needs smoothing (rolling average) and outlier filtering to avoid chasing spikes.
+
+### IP Hash
+Deterministically maps client IP (or key) to an instance.
+
+```mermaid
+flowchart TD
+  K[Key_Of IP/UserID] --> H[Hash]
+  H --> M[Modulo N]
+  M --> T[Selected Instance]
+```
+
+How it works: Compute a hash of the client’s IP (or a chosen key like userId), take modulo the number of instances, and pick that index. The same client usually lands on the same instance.
+
+- Pros: Keeps a client on the same instance (useful for caches); no cookies required.
+- Cons: NAT or changing client IPs break stickiness; distribution can be uneven if keys are skewed or the pool size changes. can become more worse if requests are coming through Forward proxy or CDN as they are not the original client IP.
+
+### Random Two Choices
+Pick two random instances; choose the less loaded of the two.
+
+How it works: Randomly pick two different instances, look at a simple load metric (like connection count), and send the request to the less loaded one.
+
+- Pros: Very simple yet balances surprisingly well; needs only a light metric.
+- Cons: Still needs a basic load signal; randomness can cause brief unevenness.
 
 ---
 
