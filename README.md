@@ -114,6 +114,13 @@ cd BasicConcepts/Load_Balancer
 code README.md
 ```
 
+**🚀 Practical Experiments:**
+```bash
+cd Projects/LoadBalancerLab
+# See README.md for details
+code README.md
+```
+
 #### 📈 [Scaling 0 to million users Guide](./BasicConcepts/Scaling0ToMillUsers/)
 **Comprehensive practical learning for Load balancers, DB replication etc.
 

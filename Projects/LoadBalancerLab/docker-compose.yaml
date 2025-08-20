@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  app1:
+    image: nginxdemos/hello
+    container_name: lb_app1
+    hostname: app1
+    ports:
+     - "5001:80"
+  
+  app2:
+    image: nginxdemos/hello
+    container_name: lb_app2
+    hostname: app2
+    ports:
+      - "5002:80"
+
+  lb:
+    image: nginx:alpine
+    container_name: lb_nginx
+    depends_on:
+      - app1
+      - app2
+    ports:
+      - "8080:80"   # L7 HTTP Load Balancer
+      - "9000:9000" # L4/TCP passthrough (stream)
+    volumes:
+      # Start with round robin config; swap this to try others
+      - ./configs/nginx.rr.conf:/etc/nginx/nginx.conf:ro
