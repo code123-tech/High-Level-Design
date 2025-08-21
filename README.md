@@ -22,6 +22,7 @@ Basic concepts, learning materials, and practical implementations for High Level
 - [🧭 Architecture Guide](#-architecture-guide)
 - [📨 Distributed Message Queue, Kafka](#-distributed-message-queue-kafka)
 - [🔀 Proxy_Reverse Proxy](#-proxy_reverse-proxy)
+- [🔀 Caching](#-caching)
 - [🔧 Additional HLD Components](#-additional-hld-components-coming-soon)
 - [🗃️ Database Concepts](#️-database-concepts-coming-soon)
 
@@ -227,12 +228,19 @@ curl http://localhost:8080/api/v1/hello
 docker-compose down
 ```
 
+#### 🔀 [Caching](./BasicConcepts/Caching/)
+This is a detailed guide on how to design a caching system.
+
+**🚀 Get Started with theory:**
+```bash
+cd BasicConcepts/Caching
+```
+
 #### 🔧 Additional HLD Components (Coming Soon)
 - Storage types: (Block, File, Object storage, RAID)
 - File System (Google file system, HDFS)
 - Bloom Filter
 - Merkle Tree, Gossiping Protocol
-- Caching (Cache invalidation, cache eviction)
 
 #### 🗃️ Database Concepts (Coming Soon)
 - Sharding
