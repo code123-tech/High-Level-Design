@@ -236,6 +236,16 @@ This is a detailed guide on how to design a caching system.
 cd BasicConcepts/Caching
 ```
 
+**🚀 Get Started with practical:**
+
+```bash
+cd Projects/CachingLab
+docker-compose up -d
+```
+
+For more details, please refer to the [CachingLab](./Projects/CachingLab/README.md)
+
+
 #### 🔧 Additional HLD Components (Coming Soon)
 - Storage types: (Block, File, Object storage, RAID)
 - File System (Google file system, HDFS)
@@ -248,6 +258,8 @@ cd BasicConcepts/Caching
 - Replication, Mirroring
 - Leader Election
 - Indexing
+
+---
 
 ## 🎯 [Practice Questions](./Questions/)
 
