@@ -1,14 +1,14 @@
 # Distributed Transaction Handling — Practical Guide
 
 ## 📋 Table of Contents
-- What is a Transaction
-- Why Distributed Transactions are Hard
-- Approaches
-  - Two-Phase Commit (2PC)
-  - Three-Phase Commit (3PC)
-  - SAGA Pattern (Async)
-- Decision Guide
-- References
+- [What is a Transaction](#what-is-a-transaction)
+- [Why Distributed Transactions are Hard](#why-distributed-transactions-are-hard)
+- [Approaches](#approaches)
+  - [Two-Phase Commit (2PC)](#two-phase-commit-2pc)
+  - [Three-Phase Commit (3PC)](#three-phase-commit-3pc)
+  - [SAGA Pattern (Async)](#saga-pattern-asynchronous-long-lived)
+- [Decision Guide](#decision-guide)
+- [References](#references)
 
 ---
 
@@ -208,9 +208,9 @@ Cons
 ---
 
 ## References
-- Gray & Reuter, Transaction Processing: Concepts and Techniques
-- Martin Fowler: Sagas, 2PC, Outbox/Inbox patterns
-- Pat Helland: Life Beyond Distributed Transactions
-- Research on Three-Phase Commit protocols and failure handling
+- Gray & Reuter, Transaction Processing: Concepts and Techniques — [Amazon](https://www.amazon.com/dp/1558601902)
+- Martin Fowler:
+  - Two-Phase Commit (background): [Wikipedia](https://en.wikipedia.org/wiki/Two-phase_commit_protocol)
+- Three-Phase Commit protocols and failure handling — [Wikipedia](https://en.wikipedia.org/wiki/Three-phase_commit_protocol)
 
 
