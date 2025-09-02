@@ -1,0 +1,58 @@
+version: "3.8"
+
+services:
+  order-service:
+    image: python:3.11-slim
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: >
+      bash -lc "pip install -r requirements.txt && uvicorn --app-dir services/order-service app:app --host 0.0.0.0 --port 8001 --reload"
+    entrypoint: 
+      - KAFKA_BOOTSTRAP_SERVERS=host.docker.internal:9092
+      - SERVICE_NAME=order-service
+    ports:
+      - "8001:8001"
+    restart: unless-stopped
+  
+  orchestrator:
+    image: python:3.11-slim
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: >
+      bash -lc "pip install -r requirements.txt && uvicorn --app-dir services/orchestrator app:app --host 0.0.0.0 --port 8002 --reload"
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=host.docker.internal:9092
+      - SERVICE_NAME=orchestrator
+    ports:
+      - "8002:8002"
+    restart: unless-stopped
+  
+  inventory-service:
+    image: python:3.11-slim
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: >
+      bash -lc "pip install -r requirements.txt && uvicorn --app-dir services/inventory-service app:app --host 0.0.0.0 --port 8003 --reload"
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=host.docker.internal:9092
+      - SERVICE_NAME=inventory-service
+    ports:
+      - "8003:8003"
+    restart: unless-stopped
+
+  payment-service:
+    image: python:3.11-slim
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: >
+      bash -lc "pip install -r requirements.txt && uvicorn --app-dir services/payment-service app:app --host 0.0.0.0 --port 8004 --reload"\
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=host.docker.internal:9092
+      - SERVICE_NAME=payment-service
+    ports:
+      - "8004:8004"
+    restart: unless-stopped
