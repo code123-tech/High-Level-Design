@@ -108,7 +108,7 @@ async def handle_reserve(saga_id: str, order_id: str, sku: str, quantity: int, c
         reserved_by_saga[(saga_id, sku)] = reserved_by_saga.get((saga_id, sku), 0) + quantity
         event = {
             "sagaId": saga_id,
-            "type": "reserved",
+            "status": "reserved",
             "orderId": order_id,
             "sku": sku,
             "traceId": cmd.get("traceId"),
