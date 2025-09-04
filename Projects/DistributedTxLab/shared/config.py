@@ -8,7 +8,7 @@ def get_env(name: str, default: str) -> str:
     return value if value is not None and value.strip() != "" else default
 
 # Kafka Bootstrap servers
-KAFKA_BOOTSTRAP_SERVERS: str = get_env("KAFKA_BOOTSTRAP_SERVER", "localhost:9092")
+KAFKA_BOOTSTRAP_SERVERS: str = get_env("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
 
 # Topics
 TOPIC_ORDERS: str = get_env("TOPIC_ORDERS", "orders")

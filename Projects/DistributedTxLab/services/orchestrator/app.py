@@ -26,7 +26,7 @@ from aiokafka import AIOKafkaProducer, AIOKafkaConsumer # type: ignore
 
 
 app = FastAPI(title="orchestrator")
-procuder: AIOKafkaProdcuer | None = None # type: ignore
+producer: AIOKafkaProducer | None = None # type: ignore
 consumer: AIOKafkaConsumer | None = None # type: ignore
 consumer_task: asyncio.Task | None = None 
 
@@ -36,28 +36,39 @@ saga_orders: Dict[str, Dict[str, Any]] = {} # order details for initiating payme
 @app.on_event("startup")
 async def on_startup() -> None:
     global producer, consumer, consumer_task
-    producer = AIOKafkaProducer(
-        bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,
-        client_id = PRODUCER_CLIENT_ID
-    )
-    await producer.start()
-    print(f"[{SERVICE_NAME}] producer started")
+    # Start producer (best effort)
+    try:
+        temp_prod = AIOKafkaProducer(
+            bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,
+            client_id=PRODUCER_CLIENT_ID,
+        )
+        await temp_prod.start()
+        producer = temp_prod
+        print(f"[{SERVICE_NAME}] producer started")
+    except Exception as exc:
+        producer = None
+        print(f"[{SERVICE_NAME}] producer start skipped: {exc}")
 
-    consumer = AIOKafkaConsumer(
-        TOPIC_ORDERS,
-        TOPIC_INV_EVENTS,
-        TOPIC_PAY_EVENTS,
-        bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,
-        group_id=GROUP_ORCHESTRATOR,
-        client_id=CONSUMER_CLIENT_ID,
-        enable_auto_commit=True,
-        auto_offset_reset="earliest"
-    )
-    await consumer.start()
-    print(f"[{SERVICE_NAME}] consumer started")
-
-    consumer_task = asyncio.create_task(_consumer_loop())
-    print(f"[{SERVICE_NAME}] consumer task started")
+    # Start consumer (best effort)
+    try:
+        temp_cons = AIOKafkaConsumer(
+            TOPIC_ORDERS,
+            TOPIC_INV_EVENTS,
+            TOPIC_PAY_EVENTS,
+            bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,
+            group_id=GROUP_ORCHESTRATOR,
+            client_id=CONSUMER_CLIENT_ID,
+            enable_auto_commit=True,
+            auto_offset_reset="earliest",
+        )
+        await temp_cons.start()
+        consumer = temp_cons
+        print(f"[{SERVICE_NAME}] consumer started")
+        consumer_task = asyncio.create_task(_consumer_loop())
+        print(f"[{SERVICE_NAME}] consumer task started")
+    except Exception as exc:
+        consumer = None
+        print(f"[{SERVICE_NAME}] consumer start skipped: {exc}")
 
 @app.on_event("shutdown")
 async def on_shutdown() -> None:
@@ -190,7 +201,7 @@ async def _handle_payment_event(saga_id: str, payment: Dict[str, Any]) -> None:
 
 async def _send(topic: str, saga_id: str, event: Dict[str, Any]) -> None:
 
-    assert procuder is not None
+    assert producer is not None
 
     await producer.send_and_wait(
         topic,
@@ -198,3 +209,6 @@ async def _send(topic: str, saga_id: str, event: Dict[str, Any]) -> None:
         key=saga_partition_key(saga_id)
     )
 
+@app.get("/health")
+async def health() -> Dict[str, Any]:
+    return {"service": "orchestrator", "status": "ok"}

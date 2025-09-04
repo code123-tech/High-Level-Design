@@ -22,7 +22,7 @@ from aiokafka import AIOKafkaProducer, AIOKafkaConsumer # type: ignore
 
 
 app = FastAPI(title="inventory-service")
-procuder: AIOKafkaProdcuer | None = None # type: ignore
+producer: AIOKafkaProducer | None = None # type: ignore
 consumer: AIOKafkaConsumer | None = None # type: ignore
 consumer_task: asyncio.Task | None = None 
 
@@ -32,26 +32,35 @@ reserved_by_saga: Dict[Tuple[str, str], int] = {} # (sagaId, sku) -> quantity
 @app.on_event("startup")
 async def on_startup() -> None:
     global producer, consumer, consumer_task
-    producer = AIOKafkaProducer(
-        bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,
-        client_id = PRODUCER_CLIENT_ID
-    )
-    await producer.start()
-    print(f"[{SERVICE_NAME}] producer started")
+    try:
+        temp_prod = AIOKafkaProducer(
+            bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,
+            client_id=PRODUCER_CLIENT_ID,
+        )
+        await temp_prod.start()
+        producer = temp_prod
+        print(f"[{SERVICE_NAME}] producer started")
+    except Exception as exc:
+        producer = None
+        print(f"[{SERVICE_NAME}] producer start skipped: {exc}")
 
-    consumer = AIOKafkaConsumer(
-        TOPIC_INV_COMMANDS,
-        bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,
-        group_id=GROUP_INVENTORY,
-        client_id=CONSUMER_CLIENT_ID,
-        enable_auto_commit=True,
-        auto_offset_reset="earliest"
-    )
-    await consumer.start()
-    print(f"[{SERVICE_NAME}] consumer started")
-
-    consumer_task = asyncio.create_task(_consumer_loop())
-    print(f"[{SERVICE_NAME}] consumer task started with stock: {sku_stock}")
+    try:
+        temp_cons = AIOKafkaConsumer(
+            TOPIC_INV_COMMANDS,
+            bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,
+            group_id=GROUP_INVENTORY,
+            client_id=CONSUMER_CLIENT_ID,
+            enable_auto_commit=True,
+            auto_offset_reset="earliest",
+        )
+        await temp_cons.start()
+        consumer = temp_cons
+        print(f"[{SERVICE_NAME}] consumer started")
+        consumer_task = asyncio.create_task(_consumer_loop())
+        print(f"[{SERVICE_NAME}] consumer task started with stock: {sku_stock}")
+    except Exception as exc:
+        consumer = None
+        print(f"[{SERVICE_NAME}] consumer start skipped: {exc}")
 
 @app.on_event("shutdown")
 async def on_shutdown() -> None:
@@ -80,7 +89,7 @@ async def _consumer_loop() -> None:
             cmd_type = cmd.get('type')
             order_id = cmd.get('orderId')
             sku = cmd.get('sku')
-            quantity = int(cmd.get('quantity'), 0)
+            quantity = int(cmd.get('quantity', 0))
 
             if cmd_type == "reserve":
                 await handle_reserve(saga_id, order_id, sku, quantity, cmd)
@@ -143,7 +152,7 @@ async def handle_release(saga_id: str, order_id: str, sku: str, quantity: int, c
     
 async def _send(topic: str, saga_id: str, event: Dict[str, Any]) -> None:
 
-    assert procuder is not None
+    assert producer is not None
 
     await producer.send_and_wait(
         topic,
