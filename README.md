@@ -23,6 +23,7 @@ Basic concepts, learning materials, and practical implementations for High Level
 - [📨 Distributed Message Queue, Kafka](#-distributed-message-queue-kafka)
 - [🔀 Proxy_Reverse Proxy](#-proxy_reverse-proxy)
 - [🔀 Caching](#-caching)
+- [🔀 Distributed Transaction](#-distributed-transaction)
 - [🔧 Additional HLD Components](#-additional-hld-components-coming-soon)
 - [🗃️ Database Concepts](#️-database-concepts-coming-soon)
 
@@ -240,6 +241,21 @@ cd BasicConcepts/Caching
 
 ```bash
 cd Projects/CachingLab
+docker-compose up -d
+```
+
+#### 🔀 [Distributed Transaction](./BasicConcepts/Distributed_Transaction_Handling/)
+This is a detailed guide on how to design a distributed transaction handling system.
+
+**🚀 Get Started with theory:**
+```bash
+cd BasicConcepts/Distributed_Transaction_Handling
+```
+
+**🚀 Get Started with practical:**
+
+```bash
+cd Projects/DistributedTxLab
 docker-compose up -d
 ```
 
