@@ -271,6 +271,11 @@ This is a detailed guide on how to design a bloom filter.
 cd BasicConcepts/Bloom_Filters
 ```
 
+**🚀 Get Started with Basic Bloom Filter Implementation in Java:**
+```bash
+cd Questions/Bloom_Filter
+```
+
 #### 🔧 Additional HLD Components (Coming Soon)
 - Storage types: (Block, File, Object storage, RAID)
 - File System (Google file system, HDFS)
