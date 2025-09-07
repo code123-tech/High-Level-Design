@@ -24,6 +24,7 @@ Basic concepts, learning materials, and practical implementations for High Level
 - [🔀 Proxy_Reverse Proxy](#-proxy_reverse-proxy)
 - [🔀 Caching](#-caching)
 - [🔀 Distributed Transaction](#-distributed-transaction)
+- [🔧 Bloom Filter](#-bloom-filter)
 - [🔧 Additional HLD Components](#-additional-hld-components-coming-soon)
 - [🗃️ Database Concepts](#️-database-concepts-coming-soon)
 
@@ -262,10 +263,17 @@ docker-compose up -d
 For more details, please refer to the [CachingLab](./Projects/CachingLab/README.md)
 
 
+#### 🔧 [Bloom Filter](./BasicConcepts/Bloom_Filters/)
+This is a detailed guide on how to design a bloom filter.
+
+**🚀 Get Started with theory:**
+```bash
+cd BasicConcepts/Bloom_Filters
+```
+
 #### 🔧 Additional HLD Components (Coming Soon)
 - Storage types: (Block, File, Object storage, RAID)
 - File System (Google file system, HDFS)
-- Bloom Filter
 - Merkle Tree, Gossiping Protocol
 
 #### 🗃️ Database Concepts (Coming Soon)
