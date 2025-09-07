@@ -7,9 +7,13 @@ public class BloomFilterImplementation {
     private final BitSet bitSetArray;
     private final int m; // Size of the bit set array
     private final int k; // Number of hash functions
-
-    // n - number of expected elements
-    // p - probability of false positives
+    
+    /**
+     * n - number of expected elements
+     * p - probability of false positives
+     * below formulas are standard one, can read: 
+     * <a href="BasicConcepts/Bloom_Filters/README.md">Bloom Filters</a>
+     */
     public BloomFilterImplementation(int n, double p) {
 
         this.m = (int) Math.ceil(-(n * Math.log(p)) / Math.pow(Math.log(2), 2));
