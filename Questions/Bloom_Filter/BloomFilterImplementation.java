@@ -54,6 +54,41 @@ public class BloomFilterImplementation {
     }
 
     private static int smear(int x) {
+        // Let's explain each line of the smear function with an example.
+        // Suppose x = 123456789
+
+        // 1. x ^= (x >>> 16);
+        //    - ">>> 16" means shift x right by 16 bits, filling with zeros.
+        //    - x = 123456789 = 0x075BCD15
+        //    - x >>> 16 = 0x0000075B = 1883
+        //    - x ^ 1883 = 123456789 ^ 1883 = 123458600
+        //    - Now x = 123458600
+
+        // 2. x *= 0x7feb352d;
+        //    - 0x7feb352d = 2146434349
+        //    - x = 123458600 * 2146434349 = 264997964964124140
+        //    - Now x = 264997964964124140
+
+        // 3. x ^= (x >>> 15);
+        //    - x >>> 15 = 264997964964124140 >>> 15 = 8090739640
+        //    - x ^ 8090739640 = 264997964964124140 ^ 8090739640 = 264997957873384508
+        //    - Now x = 264997957873384508
+
+        // 4. x *= 0x846ca68b;
+        //    - 0x846ca68b = 2229579579
+        //    - x = 264997957873384508 * 2229579579 = 590944393964375964234222332
+        //    - Now x = 590944393964375964234222332
+
+        // 5. x ^= (x >>> 16);
+        //    - x >>> 16 = 590944393964375964234222332 >>> 16 = 9020739643939642342
+        //    - x ^ 9020739643939642342 = 590944393964375964234222332 ^ 9020739643939642342 = 590944393955355224590289990
+        //    - Now x = 590944393955355224590289990
+
+        // 6. return x;
+        //    - The final value is returned.
+
+        // In summary, each line mixes the bits of x using bitwise XOR and multiplication with large constants.
+        // This helps to "smear" the bits, producing a more uniform and unpredictable hash value.
         x ^= (x >>> 16);
         x *= 0x7feb352d;
         x ^= (x >>> 15);
