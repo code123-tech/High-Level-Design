@@ -1,45 +1,45 @@
 # BloomFilterCrawlerLab configuration
 
 # Sizing and accuracy
-expectedItems: 500000          # anticipated number of URLs per active filter
-targetFPR: 0.01                # desired false positive rate (e.g., 1%)
+expectedItems: 500000          # Estimated URLs in the ACTIVE filter; used to size bit array (m) and number of hashes (k)
+targetFPR: 0.01                # Target false positive rate; lower => more memory and hashes, higher => smaller/faster but more false positives
 
 # Rotation policy
 rotation:
-  hours: 24                    # rotate active filter every N hours
-  graceHours: 24               # keep previous filter for this window to avoid false negatives
-  maxBitsSetPercent: 75        # optional: early rotate if active filter gets too saturated
+  hours: 24                    # Rotate ACTIVE filter every N hours to cap saturation and keep FPR stable
+  graceHours: 24               # Keep PREVIOUS filter for this many hours after rotation to avoid sudden false negatives
+  maxBitsSetPercent: 75        # Early-rotate threshold: if % of 1-bits exceeds this before time window, rotate immediately
 
 # Snapshot persistence
 snapshot:
-  dir: data/snapshots          # where to store filter snapshots (relative to project root)
-  prefix: bf                   # filename prefix for snapshots
-  maxToKeep: 14                # how many historical snapshots to retain
+  dir: data/snapshots          # Directory for serialized filter snapshots (relative to project root)
+  prefix: bf                   # Filename prefix for snapshot files
+  maxToKeep: 14                # Retain at most this many snapshots to bound disk usage
 
 # Service mode
 service:
-  mode: cli                    # cli | rest
+  mode: cli                    # How to run the app: cli | rest
   rest:
-    host: 127.0.0.1
-    port: 18081
+    host: 127.0.0.1            # Bind address for REST server (use 0.0.0.0 to expose on all interfaces)
+    port: 18081                # REST port; choose uncommon to avoid conflicts
 
 # URL normalization rules
 normalizer:
-  lowerCaseHost: true
-  stripDefaultPorts: true
-  stripTrailingSlash: true
-  dropFragment: true           # remove #fragment
-  sortQueryParams: true        # sort query params for stable representation
+  lowerCaseHost: true          # Convert scheme/host to lowercase (WWW.Example.com -> www.example.com)
+  stripDefaultPorts: true      # Remove :80 (http) and :443 (https) to avoid duplicates
+  stripTrailingSlash: true     # Treat /path and /path/ as the same
+  dropFragment: true           # Remove URL fragments (#section) that don’t affect server resource
+  sortQueryParams: true        # Sort query params so ?b=2&a=1 equals ?a=1&b=2
 
 # Metrics & logging
 metrics:
-  enabled: true
-  logEverySeconds: 60
+  enabled: true                # Enable basic counters/gauges for visibility
+  logEverySeconds: 60          # Log metrics every N seconds
 
 # Optional seed data
 seedData:
-  urlsFile: data/samples/urls.txt
+  urlsFile: data/samples/urls.txt  # Optional file to preload URLs on startup (for demos/tests)
 
 # Storage encoding for snapshots
 storage:
-  format: raw                  # raw | pickle (raw = custom header + bit array)
+  format: raw                  # Snapshot format: raw | pickle (raw = portable header(m,k)+bit-array; pickle = Python-only)
